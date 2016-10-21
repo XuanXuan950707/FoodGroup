@@ -1,13 +1,23 @@
 package com.example.dllo.foodgroup;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import com.example.dllo.foodgroup.base.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by dllo on 16/10/21.
+ */
+public class MainActivity extends BaseActivity {
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_main;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void iniData() {
+
     }
 }
