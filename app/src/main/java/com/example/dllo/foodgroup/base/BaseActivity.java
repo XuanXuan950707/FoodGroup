@@ -2,6 +2,7 @@ package com.example.dllo.foodgroup.base;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -10,10 +11,15 @@ import android.view.View;
  */
 public abstract class BaseActivity extends AppCompatActivity{
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(getLayout());
+
+        initView();
+
+        iniData();
     }
+
     protected abstract int getLayout();
 
     // 初始化组件,各种findViewById
