@@ -81,7 +81,7 @@
                     />
             </LinearLayout>
             <LinearLayout
-                android:paddingLeft="30dp"
+                android:layout_marginLeft="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -97,7 +97,7 @@
                     />
             </LinearLayout>
             <LinearLayout
-                android:paddingLeft="30dp"
+                android:layout_marginLeft="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -114,15 +114,81 @@
             </LinearLayout>
 
         </LinearLayout>
-            <GridView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:id="@+id/foodencylope_gv"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="食物分类"
+                    android:textSize="20dp"
+                    />
+            <GridView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:id="@+id/foodencylope_class"
                 android:numColumns="3"
                 android:horizontalSpacing="10dp"
                 android:verticalSpacing="10dp"
                 >
             </GridView>
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="热门品牌"
+                    android:textSize="20dp"
+                    />
+                <GridView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:id="@+id/foodencylope_brand"
+                    android:numColumns="3"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
+                    >
+                </GridView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="连锁餐饮"
+                    android:textSize="20dp"
+                    />
+                <GridView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:id="@+id/foodencylope_restaurant"
+                    android:numColumns="3"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
+                    >
+                </GridView>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

@@ -34,7 +34,7 @@ public class VolleySingleton {
     }
     public void getImage(String url, ImageView imageView){
         mImageLoader.get(url,ImageLoader.getImageListener(
-                imageView, R.mipmap.ic_launcher,R.mipmap.ic_launcher
+                imageView, R.mipmap.img_default_compared_food,R.mipmap.img_default_compared_food
         ));
     }
 

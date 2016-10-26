@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
  */
 public class GridBean {
     String title;
-    Bitmap bitmap;
+    String image;
 
     public String getTitle() {
         return title;
@@ -17,11 +17,19 @@ public class GridBean {
         this.title = title;
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
+//    public Bitmap getBitmap() {
+//        return bitmap;
+//    }
+//
+//    public void setBitmap(Bitmap bitmap) {
+//        this.bitmap = bitmap;
+//    }
+
+    public String getImage() {
+        return image;
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -26,11 +26,25 @@ public class FoodEncyclopediaFragment extends BaseFragment {
     private ListView lv;
     private LinearLayout headViewLayout;
     private String url = "http://food.boohee.com/fb/v1/categories/list";
-    private GridView gv;
+    private GridView classGridView;
+    private ArrayList<GridBean> classList;
+    private GridViewAdapter classAdapter;
+    private GridViewAdapter brandAdapter;
+    private GridView brandGridView;
+    private ArrayList<GridBean> brandList;
+    private GridView restaurantGridView;
+    private ArrayList<GridBean> restaurantList;
+    private GridViewAdapter restaurantAdapter;
 
     @Override
     protected void initData() {
 
+        brandList = new ArrayList<>();
+        classList = new ArrayList<>();
+        restaurantList = new ArrayList<>();
+        classAdapter = new GridViewAdapter(getContext());
+        brandAdapter = new GridViewAdapter(getContext());
+        restaurantAdapter = new GridViewAdapter(getContext());
 
         GsonRequest<TestBean> gsonRequest =
                 new GsonRequest<TestBean>(TestBean.class,
@@ -38,17 +52,41 @@ public class FoodEncyclopediaFragment extends BaseFragment {
                     @Override
                     public void onResponse(TestBean response) {
 
-                        List<Map<String, Object>> item = new ArrayList<>();
-                        for (int i = 0;i < response.getGroup().get(0).getCategories().size();i++) {
-                            Map<String, Object> map = new HashMap<String, Object>();
-                            map.put("name", response.getGroup().get(0).getCategories().get(i).getName());
-                            map.put("image", response.getGroup().get(0).getCategories().get(i).getImage_url());
-                            item.add(map);
-                        }
+//                        List<Map<String, Object>> item = new ArrayList<>();
+//                        for (int i = 0;i < response.getGroup().get(0).getCategories().size();i++) {
+//                            Map<String, Object> map = new HashMap<String, Object>();
+//                            map.put("name", response.getGroup().get(0).getCategories().get(i).getName());
+//                            map.put("image", response.getGroup().get(0).getCategories().get(i).getImage_url());
+//                            item.add(map);
+//                        }
 
-                        GridViewAdapter adapter = new GridViewAdapter(getContext(),item,
-                                R.layout.foodencylopedia_item,new String[]{"name"},new int[]{R.id.foodencylope_item_tv});
-                        gv.setAdapter(adapter);
+//                        GridViewAdapter adapter = new GridViewAdapter
+//                        gv.setAdapter(adapter);
+                        for (int i = 0;i < response.getGroup().get(0).getCategories().size();i++){
+                            GridBean bean = new GridBean();
+                            bean.setTitle(response.getGroup().get(0).getCategories().get(i).getName());
+                            bean.setImage(response.getGroup().get(0).getCategories().get(i).getImage_url());
+                            classList.add(bean);
+                        }
+                        classAdapter.setArrayList(classList);
+                        classGridView.setAdapter(classAdapter);
+                        for (int i = 0;i < response.getGroup().get(1).getCategories().size();i++){
+                            GridBean bean = new GridBean();
+                            bean.setTitle(response.getGroup().get(1).getCategories().get(i).getName());
+                            bean.setImage(response.getGroup().get(1).getCategories().get(i).getImage_url());
+                            brandList.add(bean);
+                        }
+                        brandAdapter.setArrayList(brandList);
+                        brandGridView.setAdapter(brandAdapter);
+                        for (int i = 0;i < response.getGroup().get(2).getCategories().size();i++){
+                            GridBean bean = new GridBean();
+                            bean.setTitle(response.getGroup().get(2).getCategories().get(i).getName());
+                            bean.setImage(response.getGroup().get(2).getCategories().get(i).getImage_url());
+                            restaurantList.add(bean);
+                        }
+                        restaurantAdapter.setArrayList(restaurantList);
+                        restaurantGridView.setAdapter(restaurantAdapter);
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -64,7 +102,9 @@ public class FoodEncyclopediaFragment extends BaseFragment {
     protected void initView() {
         headViewLayout = (LinearLayout) LayoutInflater.from(getContext()).inflate
                 (R.layout.activity_headfoodencylopedia,null);
-        gv = bindView(R.id.foodencylope_gv);
+        classGridView = bindView(R.id.foodencylope_class);
+        brandGridView = bindView(R.id.foodencylope_brand);
+        restaurantGridView = bindView(R.id.foodencylope_restaurant);
 
     }
 
