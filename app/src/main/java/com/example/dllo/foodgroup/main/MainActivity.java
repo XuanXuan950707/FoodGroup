@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity {
         vp.setAdapter(adapter);
         tb.setupWithViewPager(vp);
 
-        tb.setTabTextColors(Color.GRAY,Color.MAGENTA);
+        tb.setTabTextColors(Color.GRAY,Color.DKGRAY);
         tb.getTabAt(0).setIcon(R.drawable.tablayout_foodencyclopedia);
         tb.getTabAt(1).setIcon(R.drawable.tablayout_strolleat);
         tb.getTabAt(2).setIcon(R.drawable.tablayout_personage);

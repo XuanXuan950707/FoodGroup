@@ -1,0 +1,27 @@
+package com.example.dllo.foodgroup.foodencyclopedia;
+
+import android.graphics.Bitmap;
+
+/**
+ * Created by dllo on 16/10/25.
+ */
+public class GridBean {
+    String title;
+    Bitmap bitmap;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+}
