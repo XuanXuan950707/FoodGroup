@@ -21,6 +21,7 @@
 
         <activity android:name=".main.MainActivity" android:theme="@style/CustomTitle"/>
 
+        <activity android:name=".foodencyclopedia.SearchActivity" android:theme="@style/CustomTitle"/>
 
     </application>
 

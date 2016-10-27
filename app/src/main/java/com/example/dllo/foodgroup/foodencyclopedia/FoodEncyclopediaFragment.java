@@ -1,7 +1,11 @@
 package com.example.dllo.foodgroup.foodencyclopedia;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -35,6 +39,9 @@ public class FoodEncyclopediaFragment extends BaseFragment {
     private GridView restaurantGridView;
     private ArrayList<GridBean> restaurantList;
     private GridViewAdapter restaurantAdapter;
+    private LinearLayout search;
+//    private Button searchButton;
+//    private ImageButton searchImageButton;
 
     @Override
     protected void initData() {
@@ -96,7 +103,26 @@ public class FoodEncyclopediaFragment extends BaseFragment {
                 });
         VolleySingleton.getInstance().addRequest(gsonRequest);
 
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+//                intent.setClass(FoodEncyclopediaFragment,)
+                startActivity(intent);
+            }
+        });
+//        searchImageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), SearchActivity.class);
+////                intent.setClass(FoodEncyclopediaFragment,)
+//                startActivity(intent);
+//            }
+//        });
     }
+
+
 
     @Override
     protected void initView() {
@@ -105,6 +131,9 @@ public class FoodEncyclopediaFragment extends BaseFragment {
         classGridView = bindView(R.id.foodencylope_class);
         brandGridView = bindView(R.id.foodencylope_brand);
         restaurantGridView = bindView(R.id.foodencylope_restaurant);
+        search = bindView(R.id.foodencylope_search);
+//        searchButton = bindView(R.id.foodencylope_searchbtn);
+//        searchImageButton = bindView(R.id.foodencylope_searchibn);
 
     }
 

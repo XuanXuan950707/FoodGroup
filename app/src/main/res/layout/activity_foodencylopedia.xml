@@ -42,20 +42,26 @@
                 android:background="#FFFFFF"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
+               android:id="@+id/foodencylope_search"
                 >
                 <ImageView
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_home_search"
+                    android:layout_marginTop="4dp"
+                    android:background="#FFFFFF"
+                    android:id="@+id/foodencylope_searchibn"
                     />
                 <TextView
-                    android:paddingTop="7dp"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="请输入食物名称"
                     android:textSize="20dp"
                     android:textColor="#EC9D6D"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/foodencylope_searchbtn"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -138,6 +144,11 @@
                 android:verticalSpacing="10dp"
                 >
             </GridView>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@mipmap/abc_btn_check_to_on_mtrl_015"
+                    />
         </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,6 +174,11 @@
                     android:verticalSpacing="10dp"
                     >
                 </GridView>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@mipmap/abc_btn_check_to_on_mtrl_015"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -188,6 +204,11 @@
                     android:verticalSpacing="10dp"
                     >
                 </GridView>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@mipmap/abc_btn_check_to_on_mtrl_015"
+                    />
             </LinearLayout>
         </LinearLayout>
 

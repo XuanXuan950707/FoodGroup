@@ -44,7 +44,9 @@ public class StartActivity extends BaseActivity implements View.OnClickListener 
 
         @Override
         public void onFinish() {
+
             startActivity(intent);
+            finish();
         }
     };
 
