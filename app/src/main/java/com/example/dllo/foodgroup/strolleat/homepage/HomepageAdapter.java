@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dllo.foodgroup.R;
+import com.example.dllo.foodgroup.tools.CirclemageView;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class HomepageAdapter extends RecyclerView.Adapter<HomepageAdapter.MyView
         Log.d("response", arrayList.get(position).getTitle());
         holder.likeCt.setText(arrayList.get(position).getLikeCt());
         holder.publisher.setText(arrayList.get(position).getPublisher());
+        holder.description.setText(arrayList.get(position).getDescription());
 
     }
 
@@ -60,17 +62,21 @@ public class HomepageAdapter extends RecyclerView.Adapter<HomepageAdapter.MyView
 
         private final ImageView cardImage;
         private final TextView title;
-        private final ImageView publisherImage;
+
         private final TextView likeCt;
         private final TextView publisher;
+        private final TextView description;
+        private final CirclemageView publisherImage;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
             cardImage = (ImageView) itemView.findViewById(R.id.homepage_item_cardimage);
             title = (TextView) itemView.findViewById(R.id.homepage_item_title);
-            publisherImage = (ImageView) itemView.findViewById(R.id.homepage_item_publisherimage);
+            publisherImage = (CirclemageView) itemView.findViewById(R.id.homepage_item_publisherimage);
             likeCt = (TextView) itemView.findViewById(R.id.homepage_item_likect);
             publisher = (TextView) itemView.findViewById(R.id.homepage_item_publisher);
+            description = (TextView) itemView.findViewById(R.id.homepage_item_description);
         }
     }
 }

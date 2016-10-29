@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -26,15 +26,24 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             />
-        <RelativeLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="11sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/homepage_item_description"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             >
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <com.example.dllo.foodgroup.tools.CirclemageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/homepage_item_publisherimage"
 
             />
@@ -52,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             >
         <ImageView
             android:layout_width="15dp"

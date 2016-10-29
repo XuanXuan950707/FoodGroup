@@ -8,7 +8,16 @@ public class HomepageItemBean {
     String cardImage;
     String publisher;
     String publisherImage;
+    String description;
     String likeCt;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getTitle() {
         return title;

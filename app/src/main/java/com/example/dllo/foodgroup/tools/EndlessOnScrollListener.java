@@ -2,6 +2,8 @@ package com.example.dllo.foodgroup.tools;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 
 /**
  * Created by dllo on 16/10/27.
