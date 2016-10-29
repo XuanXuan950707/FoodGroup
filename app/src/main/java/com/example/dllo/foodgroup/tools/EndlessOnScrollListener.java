@@ -55,7 +55,7 @@ public abstract class EndlessOnScrollListener extends RecyclerView.OnScrollListe
         if (!loading && totalItemCount-visibleItemCount <= firstVisibleItem){
 
             currentPage ++;
-            onLoadMore(currentPage);
+            onLoadMore();
             loading = true;
         }
     }
@@ -64,5 +64,5 @@ public abstract class EndlessOnScrollListener extends RecyclerView.OnScrollListe
      * 提供一个抽闲方法，在Activity中监听到这个EndLessOnScrollListener
      * 并且实现这个方法
      * */
-    public abstract void onLoadMore(int currentPage);
+    public abstract void onLoadMore();
 }

@@ -38,7 +38,7 @@ public class AppraisalFragment extends BaseFragment {
         rv.setLayoutManager(manager);
         rv.addOnScrollListener(new EndlessOnScrollListener(manager) {
             @Override
-            public void onLoadMore(int currentPage) {
+            public void onLoadMore() {
                 refreshLayout.setRefreshing(true);
                 new Thread(new Runnable() {
                     @Override
