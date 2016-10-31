@@ -75,7 +75,7 @@ public class HomepageFragment extends BaseFragment {
                     HomepageItemBean bean = new HomepageItemBean();
                     bean.setCardImage(response.getFeeds().get(i).getCard_image());
                     bean.setTitle(response.getFeeds().get(i).getTitle());
-                    Log.d("response", response.getFeeds().get(i).getTitle());
+//                    Log.d("response", response.getFeeds().get(i).getTitle());
                     bean.setPublisher(response.getFeeds().get(i).getPublisher());
                     bean.setPublisherImage(response.getFeeds().get(i).getPublisher_avatar());
                     bean.setLikeCt(response.getFeeds().get(i).getLike_ct()+"");

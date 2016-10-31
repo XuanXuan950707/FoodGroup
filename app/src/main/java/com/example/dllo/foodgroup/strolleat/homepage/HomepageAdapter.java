@@ -47,7 +47,7 @@ public class HomepageAdapter extends RecyclerView.Adapter<HomepageAdapter.MyView
         VolleySingleton.getInstance().getImage
                 (arrayList.get(position).getPublisherImage(),holder.publisherImage);
         holder.title.setText(arrayList.get(position).getTitle());
-        Log.d("response", arrayList.get(position).getTitle());
+//        Log.d("response", arrayList.get(position).getTitle());
         holder.likeCt.setText(arrayList.get(position).getLikeCt());
         holder.publisher.setText(arrayList.get(position).getPublisher());
         holder.description.setText(arrayList.get(position).getDescription());

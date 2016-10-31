@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dllo.foodgroup.R;
-import com.example.dllo.foodgroup.strolleat.homepage.HomepageAdapter;
+import com.example.dllo.foodgroup.base.BaseViewHolder;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by dllo on 16/10/29.
  */
-public class AppraisalAdapter extends RecyclerView.Adapter<AppraisalAdapter.AppraisalViewHolder>{
+public class AppraisalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     Context context;
     ArrayList<AppraisalItemBean> arrayList;
 
@@ -31,19 +31,24 @@ public class AppraisalAdapter extends RecyclerView.Adapter<AppraisalAdapter.Appr
     }
 
     @Override
-    public AppraisalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.appraisal_item,parent,false);
-        AppraisalViewHolder viewHolder = new AppraisalViewHolder(view);
-        return viewHolder;
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        View view = LayoutInflater.from(context).inflate(R.layout.appraisal_item,parent,false);
+//        AppraisalViewHolder viewHolder = new AppraisalViewHolder(view);
+        return BaseViewHolder.getViewHolder(parent,R.layout.appraisal_item);
     }
 
     @Override
-    public void onBindViewHolder(AppraisalViewHolder holder, int position) {
-        VolleySingleton.getInstance().getImage
-                (arrayList.get(position).getBackground(),holder.background);
-        holder.source.setText(arrayList.get(position).getSource());
-        holder.title.setText(arrayList.get(position).getTitle());
-        holder.tail.setText(arrayList.get(position).getTail());
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
+        holder.setImage
+                (R.id.appraisal_item_background,arrayList.
+                        get(position).getBackground());
+//                (arrayList.get(position).getBackground(),holder.background);
+//        holder.source.setText(arrayList.get(position).getSource());
+        holder.setText(R.id.appraisal_item_source,arrayList.get(position).getSource());
+//        holder.title.setText(arrayList.get(position).getTitle());
+        holder.setText(R.id.appraisal_item_title,arrayList.get(position).getTitle());
+//        holder.tail.setText(arrayList.get(position).getTail());
+        holder.setText(R.id.appraisal_item_tail,arrayList.get(position).getTail());
     }
 
     @Override

@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="25dp"
             android:id="@+id/knowledge_shortitem_images"
             android:src="@mipmap/news_415"
@@ -30,8 +31,9 @@
             android:text="乐活家丨为什么会下厨的人更值得交往、容易钓到小鲜肉？"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:layout_marginTop="84dp"
             android:layout_marginLeft="15dp"
             android:id="@+id/knowledge_shortitem_source"

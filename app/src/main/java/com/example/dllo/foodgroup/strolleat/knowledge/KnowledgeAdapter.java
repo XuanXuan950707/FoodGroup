@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dllo.foodgroup.R;
+import com.example.dllo.foodgroup.base.BaseViewHolder;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by dllo on 16/10/29.
  */
-public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.KnowledgeViewHolder> {
+public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     Context context;
     ArrayList<KnowledgeItemBean> arraylist;
@@ -36,39 +37,49 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.Know
     }
 
     @Override
-    public KnowledgeAdapter.KnowledgeViewHolder onCreateViewHolder(ViewGroup parent,int ViewType) {
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent,int ViewType) {
         if (ViewType == 1){
-            View view = LayoutInflater.from(context).inflate(R.layout.knowledge_shortitem,parent,false);
-            KnowledgeViewHolder shortholder = new KnowledgeViewHolder(view);
-            return shortholder;
+//            View view = LayoutInflater.from(context).inflate(R.layout.knowledge_shortitem,parent,false);
+//            KnowledgeViewHolder shortholder = new KnowledgeViewHolder(view);
+            return BaseViewHolder.getViewHolder(parent,R.layout.knowledge_shortitem);
         }else if(ViewType == 2){
-            View views = LayoutInflater.from(context).inflate(R.layout.knowledge_longitem,parent,false);
-            KnowledgeViewHolder longholder = new KnowledgeViewHolder(views);
-            return longholder;
+//            View views = LayoutInflater.from(context).inflate(R.layout.knowledge_longitem,parent,false);
+//            KnowledgeViewHolder longholder = new KnowledgeViewHolder(views);
+            return BaseViewHolder.getViewHolder(parent,R.layout.knowledge_longitem);
         }
         return null;
     }
 
     @Override
-    public void onBindViewHolder(KnowledgeAdapter.KnowledgeViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
         if (arraylist.get(position).getContent_type()==1){
-            holder.shortTitle.setText(arraylist.get(position).getTitle());
-            holder.shortSource.setText(arraylist.get(position).getSource());
-            holder.shortTail.setText(arraylist.get(position).getTail());
-            VolleySingleton.getInstance().getImage
-                    (arraylist.get(position).getImages().get(0),holder.shortImage);
+//            holder.shortTitle.setText(arraylist.get(position).getTitle());
+            holder.setText(R.id.knowledge_shortitem_title,arraylist.get(position).getTitle());
+//            holder.shortSource.setText(arraylist.get(position).getSource());
+            holder.setText(R.id.knowledge_shortitem_source,arraylist.get(position).getSource());
+//            holder.shortTail.setText(arraylist.get(position).getTail());
+            holder.setText(R.id.knowledge_shortitem_tail,arraylist.get(position).getTail());
+//            VolleySingleton.getInstance().getImage
+//                    (arraylist.get(position).getImages().get(0),holder.shortImage);
+            holder.setImage(R.id.knowledge_shortitem_images,arraylist.get(position).getImages().get(0));
 
         }else if(arraylist.get(position).getContent_type()==2){
-            holder.longTitle.setText(arraylist.get(position).getTitle());
-            holder.longSource.setText(arraylist.get(position).getSource());
-            holder.longTail.setText(arraylist.get(position).getTail());
+//            holder.longTitle.setText();
+            holder.setText(R.id.knowledge_longitem_title,arraylist.get(position).getTitle());
+//            holder.longSource.setText();
+            holder.setText(R.id.knowledge_longitem_source,arraylist.get(position).getSource());
+//            holder.longTail.setText();
+            holder.setText(R.id.knowledge_longitem_tail,arraylist.get(position).getTail());
 
-            VolleySingleton.getInstance().getImage
-                    (arraylist.get(position).getImages().get(0),holder.leftImage);
-            VolleySingleton.getInstance().getImage
-                    (arraylist.get(position).getImages().get(1),holder.centerImage);
-            VolleySingleton.getInstance().getImage
-                    (arraylist.get(position).getImages().get(2),holder.rightImage);
+//            VolleySingleton.getInstance().getImage
+//                    (,holder.leftImage);
+            holder.setImage(R.id.knowledge_longitem_leftimage,arraylist.get(position).getImages().get(0));
+//            VolleySingleton.getInstance().getImage
+//                    (arraylist.get(position).getImages().get(1),holder.centerImage);
+            holder.setImage(R.id.knowledge_longitem_centerimage,arraylist.get(position).getImages().get(1));
+//            VolleySingleton.getInstance().getImage
+//                    (arraylist.get(position).getImages().get(2),holder.rightImage);
+            holder.setImage(R.id.knowledge_longitem_rightimage,arraylist.get(position).getImages().get(2));
 
         }
 

@@ -11,6 +11,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.dllo.foodgroup.R;
+import com.example.dllo.foodgroup.base.BaseViewHolder;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 
 import java.util.ArrayList;
@@ -49,29 +50,22 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        MyViewHolder viewHolder = null;
-        if (view == null){
-            view = LayoutInflater.from(context).inflate
-                    (R.layout.foodencylopedia_item,null);
-            viewHolder = new MyViewHolder(view);
-            view.setTag(viewHolder);
-        }else {
-            viewHolder = (MyViewHolder) view.getTag();
-        }
-        viewHolder.tv.setText(arrayList.get(i).getTitle());
-        VolleySingleton.getInstance().getImage
-                (arrayList.get(i).getImage(),viewHolder.iv);
-        return view;
+        BaseViewHolder viewHolder =
+                BaseViewHolder.getViewHolder
+                        (view,viewGroup,R.layout.foodencylopedia_item);
+        viewHolder.setText(R.id.foodencylope_item_tv,arrayList.get(i).getTitle());
+        viewHolder.setImage(R.id.foodencylope_item_iv,arrayList.get(i).getImage());
+        return viewHolder.getItemView();
     }
 
-    private class MyViewHolder {
+//    private class MyViewHolder {
+//
+//    private final ImageView iv;
+//    private final TextView tv;
+//
+//    public MyViewHolder(View view) {
+//        iv = (ImageView) view.findViewById(R.id.foodencylope_item_iv);
+//        tv = (TextView) view.findViewById(R.id.foodencylope_item_tv);
+//    }
 
-        private final ImageView iv;
-        private final TextView tv;
-
-        public MyViewHolder(View view) {
-            iv = (ImageView) view.findViewById(R.id.foodencylope_item_iv);
-            tv = (TextView) view.findViewById(R.id.foodencylope_item_tv);
-        }
-    }
 }
