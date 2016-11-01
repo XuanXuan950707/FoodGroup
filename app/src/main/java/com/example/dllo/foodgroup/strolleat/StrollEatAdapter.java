@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by dllo on 16/10/24.
  */
 public class StrollEatAdapter extends FragmentPagerAdapter{
-    ArrayList<Fragment> fragments;
+    private ArrayList<Fragment> fragments;
 
     private String[] title = {"首页","测评","知识","美食"};
     public void setFragments(ArrayList<Fragment> fragments) {

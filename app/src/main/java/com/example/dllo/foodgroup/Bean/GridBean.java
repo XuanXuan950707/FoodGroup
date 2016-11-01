@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.foodencyclopedia;
+package com.example.dllo.foodgroup.Bean;
 
 import android.graphics.Bitmap;
 

@@ -3,24 +3,20 @@ package com.example.dllo.foodgroup.foodencyclopedia;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.dllo.foodgroup.Bean.GridBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.tools.GsonRequest;
-import com.example.dllo.foodgroup.tools.TestBean;
+import com.example.dllo.foodgroup.Bean.TestBean;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 import com.example.dllo.foodgroup.base.BaseFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dllo on 16/10/24.

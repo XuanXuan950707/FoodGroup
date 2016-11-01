@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dllo.foodgroup.Bean.HomepageItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.tools.CirclemageView;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
@@ -19,8 +20,8 @@ import java.util.ArrayList;
  * Created by dllo on 16/10/27.
  */
 public class HomepageAdapter extends RecyclerView.Adapter<HomepageAdapter.MyViewHolder> {
-    Context context;
-    ArrayList<HomepageItemBean> arrayList;
+    private Context context;
+    private ArrayList<HomepageItemBean> arrayList;
 
     public HomepageAdapter(Context context) {
         this.context = context;
@@ -32,26 +33,52 @@ public class HomepageAdapter extends RecyclerView.Adapter<HomepageAdapter.MyView
     }
 
     @Override
+    public int getItemViewType(int position) {
+        int i = 0;
+        if (arrayList.get(position).getTitle() == null){
+
+            i = 2;
+        }
+        else if (arrayList.get(position).getTitle() != null){
+            i = 1;
+            Log.d("aaaaaa", arrayList.get(position).getTitle());
+        }
+        return i;
+    }
+
+    @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate
-                (R.layout.homepage_item,parent,false);
-        MyViewHolder myViewHolder = new MyViewHolder(view);
-        return myViewHolder;
+        if (viewType == 1) {
+            View view = LayoutInflater.from(context).inflate
+                    (R.layout.homepage_item, parent, false);
+            MyViewHolder myViewHolder = new MyViewHolder(view);
+            return myViewHolder;
+        }else if(viewType == 2){
+            View view1 = LayoutInflater.from(context).inflate
+                    (R.layout.homepage_shortitem,parent,false);
+            MyViewHolder myViewHolder = new MyViewHolder(view1);
+            return myViewHolder;
+        }
+        return null;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        VolleySingleton.getInstance().getImage
-                (arrayList.get(position).getCardImage(),holder.cardImage);
-        VolleySingleton.getInstance().getImage
-                (arrayList.get(position).getPublisherImage(),holder.publisherImage);
-        holder.title.setText(arrayList.get(position).getTitle());
+        if (arrayList.get(position).getTitle() != null) {
+            VolleySingleton.getInstance().getImage
+                    (arrayList.get(position).getCardImage(), holder.cardImage);
+            VolleySingleton.getInstance().getImage
+                    (arrayList.get(position).getPublisherImage(), holder.publisherImage);
+            holder.title.setText(arrayList.get(position).getTitle());
 //        Log.d("response", arrayList.get(position).getTitle());
-        holder.likeCt.setText(arrayList.get(position).getLikeCt());
-        holder.publisher.setText(arrayList.get(position).getPublisher());
-        holder.description.setText(arrayList.get(position).getDescription());
-
+            holder.likeCt.setText(arrayList.get(position).getLikeCt());
+            holder.publisher.setText(arrayList.get(position).getPublisher());
+            holder.description.setText(arrayList.get(position).getDescription());
+        }else if(arrayList.get(position).getTitle() == null) {
+            VolleySingleton.getInstance().getImage
+                    (arrayList.get(position).getCardImage(),holder.shortCardImage);
+        }
     }
 
     @Override
@@ -67,6 +94,7 @@ public class HomepageAdapter extends RecyclerView.Adapter<HomepageAdapter.MyView
         private final TextView publisher;
         private final TextView description;
         private final CirclemageView publisherImage;
+        private final ImageView shortCardImage;
 
 
         public MyViewHolder(View itemView) {
@@ -77,6 +105,7 @@ public class HomepageAdapter extends RecyclerView.Adapter<HomepageAdapter.MyView
             likeCt = (TextView) itemView.findViewById(R.id.homepage_item_likect);
             publisher = (TextView) itemView.findViewById(R.id.homepage_item_publisher);
             description = (TextView) itemView.findViewById(R.id.homepage_item_description);
+            shortCardImage = (ImageView) itemView.findViewById(R.id.homepage_shortitem_iv);
         }
     }
 }

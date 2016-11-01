@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.strolleat.homepage;
+package com.example.dllo.foodgroup.Bean;
 
 import java.util.List;
 
@@ -61,8 +61,17 @@ public class HomepageBean {
         private String publisher_avatar;
         private String description;
         private int content_type;
+        private String Link;
         private String type;
         private int like_ct;
+
+        public String getLink() {
+            return Link;
+        }
+
+        public void setLink(String link) {
+            Link = link;
+        }
 
         public int getItem_id() {
             return item_id;

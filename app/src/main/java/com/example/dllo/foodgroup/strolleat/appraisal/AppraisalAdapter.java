@@ -2,15 +2,15 @@ package com.example.dllo.foodgroup.strolleat.appraisal;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dllo.foodgroup.Bean.AppraisalItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseViewHolder;
-import com.example.dllo.foodgroup.tools.VolleySingleton;
+import com.example.dllo.foodgroup.tools.WebActivityListener;
 
 import java.util.ArrayList;
 
@@ -20,6 +20,11 @@ import java.util.ArrayList;
 public class AppraisalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     Context context;
     ArrayList<AppraisalItemBean> arrayList;
+    WebActivityListener listener;
+
+    public void setListener(WebActivityListener listener) {
+        this.listener = listener;
+    }
 
     public AppraisalAdapter(Context context) {
         this.context = context;
@@ -38,7 +43,7 @@ public class AppraisalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
         holder.setImage
                 (R.id.appraisal_item_background,arrayList.
                         get(position).getBackground());
@@ -49,6 +54,13 @@ public class AppraisalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         holder.setText(R.id.appraisal_item_title,arrayList.get(position).getTitle());
 //        holder.tail.setText(arrayList.get(position).getTail());
         holder.setText(R.id.appraisal_item_tail,arrayList.get(position).getTail());
+
+        holder.setItemClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.setUrl(arrayList.get(position).getLink());
+            }
+        });
     }
 
     @Override

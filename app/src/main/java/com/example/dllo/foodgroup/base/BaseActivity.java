@@ -18,6 +18,8 @@ public abstract class BaseActivity extends AppCompatActivity{
         initView();
 
         iniData();
+
+
     }
 
     protected abstract int getLayout();

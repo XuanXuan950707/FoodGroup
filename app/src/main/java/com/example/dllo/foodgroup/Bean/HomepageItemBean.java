@@ -1,4 +1,6 @@
-package com.example.dllo.foodgroup.strolleat.homepage;
+package com.example.dllo.foodgroup.Bean;
+
+import com.example.dllo.foodgroup.strolleat.StrollEatFragment;
 
 /**
  * Created by dllo on 16/10/27.
@@ -10,6 +12,15 @@ public class HomepageItemBean {
     String publisherImage;
     String description;
     String likeCt;
+    String link;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 
     public String getDescription() {
         return description;

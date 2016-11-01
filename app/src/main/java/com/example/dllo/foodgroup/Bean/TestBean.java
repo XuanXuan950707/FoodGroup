@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.tools;
+package com.example.dllo.foodgroup.Bean;
 
 import java.util.List;
 

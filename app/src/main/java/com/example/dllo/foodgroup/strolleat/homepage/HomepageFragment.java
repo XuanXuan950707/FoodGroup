@@ -7,9 +7,11 @@ import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.dllo.foodgroup.Bean.HomepageBean;
+import com.example.dllo.foodgroup.Bean.HomepageItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseFragment;
-import com.example.dllo.foodgroup.tools.EndlessOnScrollListener;
+import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 
@@ -27,6 +29,7 @@ public class HomepageFragment extends BaseFragment {
     private ArrayList<HomepageItemBean> arrayList;
     private HomepageAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
+    private int page = 2;
 
     @Override
     protected void initData() {
@@ -56,6 +59,13 @@ public class HomepageFragment extends BaseFragment {
                 refreshLayout.setRefreshing(false);
             }
         });
+        rc.addOnScrollListener(new EndLessOnScrollListener(manager) {
+            @Override
+            protected void onLoadMore(int curentPage) {
+                getGsonRequest("http://food.boohee.com/fb/v1/feeds/category_feed?page="+page+"&category=1&per=10");
+                page++;
+            }
+        });
 //        rc.addOnScrollListener(new EndlessOnScrollListener(manager) {
 //            @Override
 //            public void onLoadMore(int currentPage) {
@@ -80,6 +90,8 @@ public class HomepageFragment extends BaseFragment {
                     bean.setPublisherImage(response.getFeeds().get(i).getPublisher_avatar());
                     bean.setLikeCt(response.getFeeds().get(i).getLike_ct()+"");
                     bean.setDescription(response.getFeeds().get(i).getDescription());
+                    bean.setLink(response.getFeeds().get(i).getLink());
+//                    Log.d("HomepageFragment", response.getFeeds().get(i).getLink());
                     arrayList.add(bean);
                 }
                 adapter.setArrayList(arrayList);

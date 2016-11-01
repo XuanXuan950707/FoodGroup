@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.strolleat.knowledge;
+package com.example.dllo.foodgroup.Bean;
 
 import java.util.List;
 
@@ -9,8 +9,17 @@ public class KnowledgeItemBean {
     private String source;
     private String title;
     private String tail;
+    private String link;
     private List<String> images;
     private int content_type;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 
     public int getContent_type() {
         return content_type;

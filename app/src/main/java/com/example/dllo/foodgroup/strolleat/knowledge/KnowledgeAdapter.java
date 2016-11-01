@@ -2,15 +2,15 @@ package com.example.dllo.foodgroup.strolleat.knowledge;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dllo.foodgroup.Bean.KnowledgeItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseViewHolder;
-import com.example.dllo.foodgroup.tools.VolleySingleton;
+import com.example.dllo.foodgroup.tools.WebActivityListener;
 
 import java.util.ArrayList;
 
@@ -19,8 +19,13 @@ import java.util.ArrayList;
  */
 public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    Context context;
-    ArrayList<KnowledgeItemBean> arraylist;
+    private Context context;
+    private ArrayList<KnowledgeItemBean> arraylist;
+    WebActivityListener webActivityListener;
+
+    public void setWebActivityListener(WebActivityListener webActivityListener) {
+        this.webActivityListener = webActivityListener;
+    }
 
     public KnowledgeAdapter(Context context) {
         this.context = context;
@@ -33,6 +38,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
+
         return arraylist.get(position).getContent_type();
     }
 
@@ -51,7 +57,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
         if (arraylist.get(position).getContent_type()==1){
 //            holder.shortTitle.setText(arraylist.get(position).getTitle());
             holder.setText(R.id.knowledge_shortitem_title,arraylist.get(position).getTitle());
@@ -62,6 +68,12 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 //            VolleySingleton.getInstance().getImage
 //                    (arraylist.get(position).getImages().get(0),holder.shortImage);
             holder.setImage(R.id.knowledge_shortitem_images,arraylist.get(position).getImages().get(0));
+            holder.setItemClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    webActivityListener.setUrl(arraylist.get(position).getLink());
+                }
+            });
 
         }else if(arraylist.get(position).getContent_type()==2){
 //            holder.longTitle.setText();
@@ -81,6 +93,12 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 //                    (arraylist.get(position).getImages().get(2),holder.rightImage);
             holder.setImage(R.id.knowledge_longitem_rightimage,arraylist.get(position).getImages().get(2));
 
+            holder.setItemClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    webActivityListener.setUrl(arraylist.get(position).getLink());
+                }
+            });
         }
 
     }

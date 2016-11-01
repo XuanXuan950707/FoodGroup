@@ -5,12 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dllo.foodgroup.Bean.CookingBean;
+
 /**
  * Created by dllo on 16/10/29.
  */
 public class CookingAdapter extends RecyclerView.Adapter<CookingAdapter.CookingViewHolder> {
-    Context context;
-    CookingBean bean;
+    private Context context;
+    private CookingBean bean;
     @Override
     public CookingAdapter.CookingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
