@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.strolleat;
+package com.example.dllo.foodgroup.main;
 
 import android.content.Intent;
 import android.os.Bundle;

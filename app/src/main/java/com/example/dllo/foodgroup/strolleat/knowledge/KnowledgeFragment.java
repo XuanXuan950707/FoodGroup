@@ -12,7 +12,7 @@ import com.example.dllo.foodgroup.Bean.KnowledgeBean;
 import com.example.dllo.foodgroup.Bean.KnowledgeItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseFragment;
-import com.example.dllo.foodgroup.strolleat.StrolleatWebActivity;
+import com.example.dllo.foodgroup.main.StrolleatWebActivity;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;

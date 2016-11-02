@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseFragment;
-import com.example.dllo.foodgroup.strolleat.StrolleatWebActivity;
+import com.example.dllo.foodgroup.main.StrolleatWebActivity;
 import com.example.dllo.foodgroup.strolleat.knowledge.KnowledgeAdapter;
 import com.example.dllo.foodgroup.Bean.KnowledgeBean;
 import com.example.dllo.foodgroup.Bean.KnowledgeItemBean;

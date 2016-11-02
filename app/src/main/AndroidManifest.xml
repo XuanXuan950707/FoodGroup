@@ -23,7 +23,8 @@
 
         <activity android:name=".foodencyclopedia.SearchActivity" android:theme="@style/CustomTitle"/>
 
-        <activity android:name=".strolleat.StrolleatWebActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".main.StrolleatWebActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".main.FoodMoreActivity" android:theme="@style/CustomTitle"/>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import com.example.dllo.foodgroup.Bean.GridBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseViewHolder;
+import com.example.dllo.foodgroup.tools.KindAndGroupListnener;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,11 @@ import java.util.ArrayList;
 public class GridViewAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<GridBean> arrayList;
+    KindAndGroupListnener kindAndGroupListnener;
+
+    public void setKindAndGroupListnener(KindAndGroupListnener kindAndGroupListnener) {
+        this.kindAndGroupListnener = kindAndGroupListnener;
+    }
 
     public GridViewAdapter(Context context) {
         this.context = context;
@@ -42,7 +48,7 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, final ViewGroup viewGroup) {
         BaseViewHolder viewHolder =
                 BaseViewHolder.getViewHolder
                         (view,viewGroup,R.layout.foodencylopedia_item);
@@ -51,7 +57,7 @@ public class GridViewAdapter extends BaseAdapter {
         viewHolder.setItemClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                kindAndGroupListnener.setGroupAndKind(arrayList.get(i));
             }
         });
         return viewHolder.getItemView();

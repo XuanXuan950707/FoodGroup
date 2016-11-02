@@ -11,8 +11,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.foodgroup.Bean.GridBean;
 import com.example.dllo.foodgroup.R;
+import com.example.dllo.foodgroup.main.FoodMoreActivity;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.Bean.TestBean;
+import com.example.dllo.foodgroup.tools.KindAndGroupListnener;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 import com.example.dllo.foodgroup.base.BaseFragment;
 
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by dllo on 16/10/24.
  */
-public class FoodEncyclopediaFragment extends BaseFragment {
+public class FoodEncyclopediaFragment extends BaseFragment implements KindAndGroupListnener {
 
     private ListView lv;
     private LinearLayout headViewLayout;
@@ -48,6 +50,9 @@ public class FoodEncyclopediaFragment extends BaseFragment {
         classAdapter = new GridViewAdapter(getContext());
         brandAdapter = new GridViewAdapter(getContext());
         restaurantAdapter = new GridViewAdapter(getContext());
+        classAdapter.setKindAndGroupListnener(this);
+        brandAdapter.setKindAndGroupListnener(this);
+        restaurantAdapter.setKindAndGroupListnener(this);
 
         GsonRequest<TestBean> gsonRequest =
                 new GsonRequest<TestBean>(TestBean.class,
@@ -69,6 +74,8 @@ public class FoodEncyclopediaFragment extends BaseFragment {
                             GridBean bean = new GridBean();
                             bean.setTitle(response.getGroup().get(0).getCategories().get(i).getName());
                             bean.setImage(response.getGroup().get(0).getCategories().get(i).getImage_url());
+                            bean.setId(response.getGroup().get(0).getCategories().get(i).getId());
+                            bean.setKind(response.getGroup().get(0).getKind());
                             classList.add(bean);
                         }
                         classAdapter.setArrayList(classList);
@@ -77,6 +84,8 @@ public class FoodEncyclopediaFragment extends BaseFragment {
                             GridBean bean = new GridBean();
                             bean.setTitle(response.getGroup().get(1).getCategories().get(i).getName());
                             bean.setImage(response.getGroup().get(1).getCategories().get(i).getImage_url());
+                            bean.setId(response.getGroup().get(1).getCategories().get(i).getId());
+                            bean.setKind(response.getGroup().get(1).getKind());
                             brandList.add(bean);
                         }
                         brandAdapter.setArrayList(brandList);
@@ -85,6 +94,8 @@ public class FoodEncyclopediaFragment extends BaseFragment {
                             GridBean bean = new GridBean();
                             bean.setTitle(response.getGroup().get(2).getCategories().get(i).getName());
                             bean.setImage(response.getGroup().get(2).getCategories().get(i).getImage_url());
+                            bean.setId(response.getGroup().get(2).getCategories().get(i).getId());
+                            bean.setKind(response.getGroup().get(2).getKind());
                             restaurantList.add(bean);
                         }
                         restaurantAdapter.setArrayList(restaurantList);
@@ -136,5 +147,20 @@ public class FoodEncyclopediaFragment extends BaseFragment {
     @Override
     protected int getLayout() {
         return R.layout.activity_foodencylopedia;
+    }
+
+
+    @Override
+    public void setGroupAndKind(GridBean bean) {
+        Intent intent = new Intent();
+        String  id = String.valueOf(bean.getId());
+        String title = bean.getTitle();
+
+        intent.putExtra("id",id);
+        intent.putExtra("title",title);
+        intent.putExtra("kind",bean.getKind());
+
+        intent.setClass(getContext(),FoodMoreActivity.class);
+        startActivity(intent);
     }
 }

@@ -12,7 +12,7 @@ import com.example.dllo.foodgroup.Bean.AppraisalBean;
 import com.example.dllo.foodgroup.Bean.AppraisalItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseFragment;
-import com.example.dllo.foodgroup.strolleat.StrolleatWebActivity;
+import com.example.dllo.foodgroup.main.StrolleatWebActivity;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
@@ -45,7 +45,7 @@ public class AppraisalFragment extends BaseFragment implements WebActivityListen
         rv.addOnScrollListener(new EndLessOnScrollListener(manager) {
             @Override
             protected void onLoadMore(int curentPage) {
-                refreshLayout.setRefreshing(true);
+//                refreshLayout.setRefreshing(true);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -58,7 +58,7 @@ public class AppraisalFragment extends BaseFragment implements WebActivityListen
                 }).start();
                 getGsonRequest("http://food.boohee.com/fb/v1/feeds/category_feed?page="+page+"&category=2&per=10");
                 page++;
-                refreshLayout.setRefreshing(false);
+//                refreshLayout.setRefreshing(false);
             }
         });
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
