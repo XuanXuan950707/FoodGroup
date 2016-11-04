@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.main;
+package com.example.dllo.foodgroup.foodmore;
 
 /**
  * Created by dllo on 16/11/2.

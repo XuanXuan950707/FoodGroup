@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * Created by dllo on 16/10/21.
  */
@@ -13,6 +15,8 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //第一：默认初始化
+        Bmob.initialize(this, "268653fa0447912efad219af5371303c");
         setContentView(getLayout());
 
         initView();

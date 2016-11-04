@@ -11,7 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.foodgroup.Bean.GridBean;
 import com.example.dllo.foodgroup.R;
-import com.example.dllo.foodgroup.main.FoodMoreActivity;
+import com.example.dllo.foodgroup.foodmore.FoodMoreActivity;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.Bean.TestBean;
 import com.example.dllo.foodgroup.tools.KindAndGroupListnener;

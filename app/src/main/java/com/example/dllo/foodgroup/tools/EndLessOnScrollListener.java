@@ -50,6 +50,11 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
         }
     }
 
+    // 重置
+    public void resetPreviousTotal(){
+        previousTotal = 0;
+    }
+
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
