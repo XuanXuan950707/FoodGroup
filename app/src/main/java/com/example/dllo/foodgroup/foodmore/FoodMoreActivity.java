@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageButton;
 
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -55,6 +56,9 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
     private PopupWindow intpop;
     private boolean subValue = true;
     private String localFoodId;
+    private LinearLayout down;
+    private LinearLayout up;
+    private String sort = "0";
 
     @Override
     protected int getLayout() {
@@ -68,8 +72,9 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         recyclerView = bindView(R.id.foodmore_recyclerview);
         poptext = bindView(R.id.foodmore_popshow);
         type = bindView(R.id.foodmore_type);
-
-        setClick(this, back, poptext, type);
+        down = bindView(R.id.foodmore_orderdown);
+        up = bindView(R.id.foodmore_orderup);
+        setClick(this, back, poptext, type,down,up);
     }
 
     @Override
@@ -84,7 +89,7 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         getPopShowItem();
         arrayList = new ArrayList<>();
         adapter = new FoodMoreAdapter(this);
-        getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=1&page=1&order_asc=0");
+        getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=1&page=1&order_asc="+sort);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -93,11 +98,11 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
             @Override
             protected void onLoadMore(int curentPage) {
                 if (subValue) {
-                    getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=" + order + "&page=" + page + "&order_asc=0");
+                    getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=" + order + "&page=" + page + "&order_asc="+sort);
                     page++;
                 }
                 else if (subValue == false){
-                    getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=" + subValuepage + "&order_asc=0");
+                    getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=" + subValuepage + "&order_asc="+sort);getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=" + subValuepage + "&order_asc="+sort);
                     subValuepage++;
                 }
             }
@@ -128,6 +133,37 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
                     popupWindow.dismiss();
                 }
                 break;
+            case R.id.foodmore_orderdown:
+                orderDown();
+                break;
+            case R.id.foodmore_orderup:
+                orderUp();
+                break;
+        }
+    }
+    private void orderDown(){
+        down.setVisibility(View.GONE);
+        up.setVisibility(View.VISIBLE);
+        sort = "1";
+        arrayList.clear();
+        endLessOnScrollListener.resetPreviousTotal();
+        if (subValue) {
+            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=" + order + "&page=1&order_asc="+sort);
+        }else if (subValue == false){
+            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=1&order_asc="+sort);
+        }
+    }
+
+    private void orderUp(){
+        up.setVisibility(View.GONE);
+        down.setVisibility(View.VISIBLE);
+        sort = "0";
+        arrayList.clear();
+        endLessOnScrollListener.resetPreviousTotal();
+        if (subValue) {
+            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=" + order + "&page=1&order_asc="+sort);
+        }else if (subValue == false){
+            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=1&order_asc="+sort);
         }
     }
 
@@ -259,6 +295,9 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void setUrl(String url) {
+        down.setVisibility(View.VISIBLE);
+        up.setVisibility(View.GONE);
+        sort = "0";
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
@@ -287,11 +326,11 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         if (foodId != id) {
             localFoodId = foodId;
             subValue = false;
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + foodId + ")" + "&order_by=" + order + "&page=1&order_asc=0");
+            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + foodId + ")" + "&order_by=" + order + "&page=1&order_asc="+sort);
         }else if (foodId == id){
 
             subValue = true;
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=1&page=1&order_asc=0");
+            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=1&page=1&order_asc="+sort);
         }
         endLessOnScrollListener.resetPreviousTotal();
         poptext.setText(value);

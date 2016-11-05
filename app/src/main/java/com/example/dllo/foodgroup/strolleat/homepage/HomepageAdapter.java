@@ -23,6 +23,11 @@ import java.util.ArrayList;
 public class HomepageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private Context context;
     private ArrayList<HomepageItemBean> arrayList;
+    private HomepageItemLisener homepageItemLisener;
+
+    public void setHomepageItemLisener(HomepageItemLisener homepageItemLisener) {
+        this.homepageItemLisener = homepageItemLisener;
+    }
 
     public HomepageAdapter(Context context) {
         this.context = context;
@@ -64,7 +69,7 @@ public class HomepageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
 
         if (arrayList.get(position).getTitle() != null) {
 //            VolleySingleton.getInstance().getImage
@@ -83,10 +88,28 @@ public class HomepageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             holder.setText(R.id.homepage_item_publisher,arrayList.get(position).getPublisher());
 //            holder.description.setText();
             holder.setText(R.id.homepage_item_description,arrayList.get(position).getDescription());
+            holder.setItemClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("HomepageAdapter", "点击");
+                    homepageItemLisener.setItemMessage(arrayList.get(position).getCardImage(),
+                            arrayList.get(position).getPublisher(),
+                            arrayList.get(position).getPublisherImage(),
+                            arrayList.get(position).getLikeCt());
+                }
+            });
         }else if(arrayList.get(position).getTitle() == null) {
 //            VolleySingleton.getInstance().getImage
 //                    (,holder.shortCardImage);
             holder.setImage(R.id.homepage_shortitem_iv,arrayList.get(position).getCardImage());
+            holder.setItemClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("HomepageAdapter", "点击");
+                    homepageItemLisener.setItemMessage(arrayList.get(position).getLink(),
+                            null,null,null);
+                }
+            });
         }
     }
 

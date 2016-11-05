@@ -37,6 +37,8 @@
 
         <activity android:name=".main.StrolleatWebActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".foodmore.FoodMoreActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".strolleat.homepage.HomepageItemActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".strolleat.homepage.AdvertActivity" android:theme="@style/CustomTitle"/>
     </application>
 
 </manifest>

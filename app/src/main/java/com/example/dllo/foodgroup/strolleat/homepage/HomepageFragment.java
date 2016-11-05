@@ -1,5 +1,6 @@
 package com.example.dllo.foodgroup.strolleat.homepage;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by dllo on 16/10/24.
  */
-public class HomepageFragment extends BaseFragment {
+public class HomepageFragment extends BaseFragment implements HomepageItemLisener{
 
 
     private RecyclerView rc;
@@ -35,6 +36,7 @@ public class HomepageFragment extends BaseFragment {
     protected void initData() {
         arrayList = new ArrayList<>();
         adapter = new HomepageAdapter(getContext());
+        adapter.setHomepageItemLisener(this);
         getGsonRequest(url);
         rc.setAdapter(adapter);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager
@@ -116,5 +118,24 @@ public class HomepageFragment extends BaseFragment {
     @Override
     protected int getLayout() {
         return R.layout.activity_homepage;
+    }
+
+    @Override
+    public void setItemMessage(String cardImage, String name, String publishImage, String like) {
+        if (name != null) {
+            Intent intent = new Intent();
+            intent.putExtra("cardImage", cardImage);
+            intent.putExtra("name", name);
+            intent.putExtra("publichImage", publishImage);
+            intent.putExtra("like", like);
+            intent.setClass(getContext(), HomepageItemActivity.class);
+            startActivity(intent);
+        }else if(name == null){
+            Intent intent1 = new Intent();
+            intent1.putExtra("link",cardImage);
+            intent1.setClass(getContext(),AdvertActivity.class);
+            startActivity(intent1);
+        }
+
     }
 }
