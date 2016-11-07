@@ -1,16 +1,14 @@
-package com.example.dllo.foodgroup.foodmore;
+package com.example.dllo.foodgroup.foodencyclopedia.foodmore;
 
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import com.example.dllo.foodgroup.Bean.PopShowItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseViewHolder;
-import com.example.dllo.foodgroup.tools.WebActivityListener;
 
 import java.util.ArrayList;
 

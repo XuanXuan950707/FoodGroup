@@ -1,12 +1,17 @@
 package com.example.dllo.foodgroup.strolleat.homepage;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseActivity;
+import com.example.dllo.foodgroup.tools.CirleDrawable;
+import com.example.dllo.foodgroup.tools.ImageThread;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 
 /**
@@ -42,8 +47,21 @@ public class HomepageItemActivity extends BaseActivity implements View.OnClickLi
         like.setText(intent.getStringExtra("like"));
         VolleySingleton.getInstance().getImage
                 (intent.getStringExtra("cardImage"),publisher);
-        VolleySingleton.getInstance().getImage
-                (intent.getStringExtra("publichImage"),imageView);
+//        VolleySingleton.getInstance().getImage
+//                (intent.getStringExtra("publichImage"),imageView);
+        Handler handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                if (102 == message.what){
+                    Bitmap bitmap = (Bitmap) message.obj;
+                    CirleDrawable cirleDrawable
+                            = new CirleDrawable(bitmap);
+                    imageView.setImageDrawable(cirleDrawable);
+                }
+                return false;
+            }
+        });
+        new ImageThread(handler,intent.getStringExtra("publichImage")).start();
     }
 
     @Override

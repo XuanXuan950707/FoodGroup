@@ -3,6 +3,7 @@ package com.example.dllo.foodgroup.tools;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.os.Message;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +37,10 @@ public class ImageThread extends Thread{
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 inputStream.close();
                 connection.disconnect();
+                Message msg = new Message();
+                msg.what = 102;
+                msg.obj = bitmap;
+                handler.sendMessage(msg);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

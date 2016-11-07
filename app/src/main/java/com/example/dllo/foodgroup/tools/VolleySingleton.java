@@ -39,6 +39,7 @@ public class VolleySingleton {
     }
 
 
+
     // 获得
     public RequestQueue getmRequestQueue(){
         return mRequestQueue;

@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.foodmore;
+package com.example.dllo.foodgroup.foodencyclopedia.foodmore;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +32,7 @@ public class FoodMoreAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.setImage(R.id.foodmore_item_image,arrayList.get(position).getThumb_image_url());
+        holder.setCirleImage(R.id.foodmore_item_image,arrayList.get(position).getThumb_image_url());
         holder.setText(R.id.foodmore_item_name,arrayList.get(position).getName());
         holder.setText(R.id.foodmore_item_cacalory,arrayList.get(position).getCalory());
         holder.setText(R.id.foodmore_item_weight,arrayList.get(position).getWeight());

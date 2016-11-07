@@ -12,13 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <com.example.dllo.foodgroup.tools.CirclemageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:id="@+id/foodmore_item_image"
-        android:src="@mipmap/mid_photo_20151261348321166"
-        android:layout_margin="10dp"
-        app:isCircle="true"
+        android:src="@mipmap/img_default_compared_food"
+        android:padding="15dp"
         />
     <LinearLayout
         android:layout_width="wrap_content"

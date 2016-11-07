@@ -1,6 +1,10 @@
 package com.example.dllo.foodgroup.base;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -9,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dllo.foodgroup.R;
+import com.example.dllo.foodgroup.tools.CirleDrawable;
+import com.example.dllo.foodgroup.tools.ImageThread;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 
 /**
@@ -82,6 +89,27 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView = getView(id);
         VolleySingleton.getInstance().getImage
                 (url,imageView);
+        return this;
+    }
+
+    public BaseViewHolder setCirleImage(int id,String url){
+        final ImageView imageView = getView(id);
+//        Bitmap bitmap = BitmapFactory.decodeResource
+//                (context.getResources(), R.mipmap.img_default_compared_food);
+
+        Handler handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                if (102 == message.what){
+                    Bitmap bitmap = (Bitmap) message.obj;
+                    CirleDrawable cirleDrawable
+                            = new CirleDrawable(bitmap);
+                    imageView.setImageDrawable(cirleDrawable);
+                }
+                return false;
+            }
+        });
+        new ImageThread(handler,url).start();
         return this;
     }
 

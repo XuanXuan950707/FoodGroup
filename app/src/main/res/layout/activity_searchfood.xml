@@ -34,6 +34,33 @@
             android:layout_marginLeft="140dp"
             />
     </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="最近搜过"
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:background="#ECECEC"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_recyclerview"
+            ></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="大家都在搜"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:padding="10dp"
             android:background="#ECECEC"
             />
@@ -63,6 +90,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="苹果"
+                android:id="@+id/searchfood_apple"
                 />
             <Button
                 android:layout_width="0dp"
@@ -70,6 +98,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="香蕉"
+                android:id="@+id/searchfood_banana"
                 />
         </LinearLayout>
             <TextView
@@ -93,6 +122,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="馒头"
+                android:id="@+id/searchfood_bun"
                 />
             <Button
                 android:layout_width="0dp"
@@ -100,6 +130,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="红薯"
+                android:id="@+id/searchfood_potato"
                 />
         </LinearLayout>
             <TextView
@@ -124,6 +155,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="酸奶"
+                android:id="@+id/searchfood_yoghurt"
                 />
             <Button
                 android:layout_width="0dp"
@@ -131,6 +163,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="米饭"
+                android:id="@+id/searchfood_rice"
                 />
         </LinearLayout>
             <TextView
@@ -155,6 +188,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="玉米"
+                android:id="@+id/searchfood_corn"
                 />
             <Button
                 android:layout_width="0dp"
@@ -162,6 +196,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="鸡蛋"
+                android:id="@+id/searchfood_egg"
                 />
         </LinearLayout>
             <TextView
@@ -186,6 +221,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="豆浆"
+                android:id="@+id/searchfood_soybean"
                 />
             <Button
                 android:layout_width="0dp"
@@ -193,6 +229,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="草莓"
+                android:id="@+id/searchfood_strawberry"
                 />
         </LinearLayout>
             <TextView
@@ -202,4 +239,6 @@
                 />
         </LinearLayout>
     </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.foodmore;
+package com.example.dllo.foodgroup.foodencyclopedia.foodmore;
 
 /**
  * Created by dllo on 16/11/2.

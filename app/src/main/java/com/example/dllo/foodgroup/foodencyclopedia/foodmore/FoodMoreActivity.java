@@ -1,4 +1,4 @@
-package com.example.dllo.foodgroup.foodmore;
+package com.example.dllo.foodgroup.foodencyclopedia.foodmore;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;

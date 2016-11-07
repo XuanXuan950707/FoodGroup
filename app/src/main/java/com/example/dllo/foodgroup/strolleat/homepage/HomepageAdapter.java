@@ -75,10 +75,11 @@ public class HomepageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 //            VolleySingleton.getInstance().getImage
 //                    (, holder.cardImage);
             holder.setImage(R.id.homepage_item_cardimage,arrayList.get(position).getCardImage());
+            holder.setCirleImage(R.id.homepage_item_publisherimage,arrayList.get(position).getPublisherImage());
 //            VolleySingleton.getInstance().getImage
 //                    (, holder.publisherImage);
-            holder.setImage(R.id.homepage_item_publisherimage,
-                    arrayList.get(position).getPublisherImage());
+//            holder.setImage(R.id.homepage_item_publisherimage,
+//                    arrayList.get(position).getPublisherImage());
 //            holder.title.setText();
             holder.setText(R.id.homepage_item_title,arrayList.get(position).getTitle());
 //        Log.d("response", arrayList.get(position).getTitle());

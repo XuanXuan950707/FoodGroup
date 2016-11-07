@@ -33,10 +33,10 @@
 
         <activity android:name=".main.MainActivity" android:theme="@style/CustomTitle"/>
 
-        <activity android:name=".foodencyclopedia.SearchActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".foodencyclopedia.search.SearchActivity" android:theme="@style/CustomTitle"/>
 
         <activity android:name=".main.StrolleatWebActivity" android:theme="@style/CustomTitle"/>
-        <activity android:name=".foodmore.FoodMoreActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".foodencyclopedia.foodmore.FoodMoreActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".strolleat.homepage.HomepageItemActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".strolleat.homepage.AdvertActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".main.LoginActivity" android:theme="@style/CustomTitle"/>
