@@ -34,7 +34,6 @@ public class SearchAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.setText(R.id.history_tv,arrayList.get(position));
-        Log.d("SearchAdapter", arrayList.get(position));
     }
 
     @Override

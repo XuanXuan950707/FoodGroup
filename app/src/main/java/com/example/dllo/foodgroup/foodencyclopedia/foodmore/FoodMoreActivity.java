@@ -83,6 +83,9 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         id = intent.getStringExtra("id");
         String title = intent.getStringExtra("title");
         kind = intent.getStringExtra("kind");
+        if (!kind.equals("group")){
+            poptext.setVisibility(View.GONE);
+        }
         Log.d("FoodMoreActivity", kind);
 //        popArrayList = getPopShowItem();
         getTypePopShowItem();
@@ -249,18 +252,10 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         ListView listView = (ListView) view.findViewById(R.id.popshow_listview);
         IntPopAdapter popAdapter = new IntPopAdapter(this);
         popAdapter.setFoodValueListener(this);
-        int type =  0;
-        if (kind == "group"){
-            type = 0;
-        }else if (kind == "brand"){
-            type = 1;
-        }else if (kind == "restaurant"){
-            type = 2;
-        }
-        for (int i = 0; i < testBean.getGroup().get(type).getCategories().get(Integer.parseInt(id)-1).getSub_categories().size(); i++){
+        for (int i = 0; i < testBean.getGroup().get(0).getCategories().get(Integer.parseInt(id)-1).getSub_categories().size(); i++){
             PopShowItemBean bean = new PopShowItemBean();
-            bean.setId(""+testBean.getGroup().get(type).getCategories().get(Integer.parseInt(id)-1).getSub_categories().get(i).getId());
-            bean.setName(testBean.getGroup().get(type).getCategories().get(Integer.parseInt(id)-1).getSub_categories().get(i).getName());
+            bean.setId(""+testBean.getGroup().get(0).getCategories().get(Integer.parseInt(id)-1).getSub_categories().get(i).getId());
+            bean.setName(testBean.getGroup().get(0).getCategories().get(Integer.parseInt(id)-1).getSub_categories().get(i).getName());
             popIntBean.add(bean);
         }
         popAdapter.setArrayList(popIntBean);
