@@ -3,10 +3,12 @@ package com.example.dllo.foodgroup.foodencyclopedia.search;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseViewHolder;
+import com.example.dllo.foodgroup.tools.WebActivityListener;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,11 @@ import java.util.ArrayList;
 public class SearchAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private ArrayList<String> arrayList;
     private Context context;
+    private WebActivityListener webActivityListener;
+
+    public void setWebActivityListener(WebActivityListener webActivityListener) {
+        this.webActivityListener = webActivityListener;
+    }
 
     public SearchAdapter(Context context) {
         this.context = context;
@@ -32,8 +39,14 @@ public class SearchAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
         holder.setText(R.id.history_tv,arrayList.get(position));
+        holder.setItemClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webActivityListener.setUrl(arrayList.get(position));
+            }
+        });
     }
 
     @Override

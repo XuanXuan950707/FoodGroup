@@ -93,9 +93,9 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         arrayList = new ArrayList<>();
         adapter = new FoodMoreAdapter(this);
         getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=1&page=1&order_asc="+sort);
-        recyclerView.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
 
         recyclerView.addOnScrollListener(endLessOnScrollListener = new EndLessOnScrollListener(manager) {
             @Override
@@ -111,6 +111,7 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
             }
         });
 
+
     }
 
     @Override
@@ -124,7 +125,7 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
                 if (intpop != null && intpop.isShowing()) {
                     intpop.dismiss();
                 }else {
-                    initPop();
+                    intpop.showAsDropDown(poptext);
                 }
 //
 
@@ -203,6 +204,7 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void onResponse(TestBean response) {
                         testBean = response;
+                        initPop();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -260,7 +262,7 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         }
         popAdapter.setArrayList(popIntBean);
         listView.setAdapter(popAdapter);
-        intpop.showAsDropDown(poptext);
+
     }
     private void initTypesPop() {
         View view = LayoutInflater.from(this).inflate

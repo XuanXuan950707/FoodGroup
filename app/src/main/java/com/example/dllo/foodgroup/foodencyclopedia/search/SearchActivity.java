@@ -23,15 +23,17 @@ import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreItemBean;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
+import com.example.dllo.foodgroup.tools.WebActivityListener;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by dllo on 16/10/27.
  */
-public class SearchActivity extends BaseActivity implements View.OnClickListener {
+public class SearchActivity extends BaseActivity implements View.OnClickListener, WebActivityListener {
 
     private ImageButton returnButton;
     private ImageButton searchButton;
@@ -58,7 +60,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private ImageView clear;
     private String url;
     private int page = 2;
-    private LinearLayoutManager manager1;
+    private LinearLayoutManager foodmanager;
+    private EndLessOnScrollListener endLessOnScrollListener;
 
     @Override
     protected int getLayout() {
@@ -87,27 +90,28 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         egg = bindView(R.id.searchfood_egg);
         soybean = bindView(R.id.searchfood_soybean);
         strawberry = bindView(R.id.searchfood_strawberry);
-        setClick(this,returnButton,searchButton, apple, banana, bun, potato,yoghurt,rice,
-                corn,egg,soybean,strawberry,remove,clear);
+        setClick(this, returnButton, searchButton, apple, banana, bun, potato, yoghurt, rice,
+                corn, egg, soybean, strawberry, remove, clear);
     }
 
     @Override
     protected void iniData() {
         arrayList = new ArrayList<>();
         itemBeen = new ArrayList<>();
-        if (arrayList.size() == 0){
+        if (arrayList.size() == 0) {
             history.setVisibility(View.GONE);
         }
         adapter = new SearchAdapter(this);
+        adapter.setWebActivityListener(this);
         adapter.setArrayList(arrayList);
         historyview.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         historyview.setLayoutManager(manager);
-        manager1 = new LinearLayoutManager(this);
-        foodView.addOnScrollListener(new EndLessOnScrollListener(manager1) {
+        foodmanager = new LinearLayoutManager(this);
+        foodView.addOnScrollListener(endLessOnScrollListener = new EndLessOnScrollListener(foodmanager) {
             @Override
             protected void onLoadMore(int curentPage) {
-                getGsonRequest("http://food.boohee.com/fb/v1/search?page="+page+"&order_asc=desc&q="+toUtf8(url));
+                getGsonRequest("http://food.boohee.com/fb/v1/search?page=" + page + "&order_asc=desc&q=" + toUtf8(url));
                 page++;
             }
         });
@@ -117,7 +121,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.searchfood_clear:
                 clearAll();
                 break;
@@ -129,51 +133,71 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.searchfood_apple:
                 editText.setText("苹果");
+                search();
                 break;
             case R.id.searchfood_banana:
                 editText.setText("香蕉");
+                search();
                 break;
             case R.id.searchfood_bun:
                 editText.setText("馒头");
+                search();
                 break;
             case R.id.searchfood_corn:
                 editText.setText("玉米");
+                search();
                 break;
             case R.id.searchfood_egg:
                 editText.setText("鸡蛋");
+                search();
                 break;
             case R.id.searchfood_potato:
                 editText.setText("红薯");
+                search();
                 break;
             case R.id.searchfood_rice:
                 editText.setText("米饭");
+                search();
                 break;
             case R.id.searchfood_soybean:
                 editText.setText("豆浆");
+                search();
                 break;
             case R.id.searchfood_strawberry:
                 editText.setText("草莓");
+                search();
                 break;
             case R.id.searchfood_yoghurt:
                 editText.setText("酸奶");
+                search();
                 break;
             case R.id.searchfood_delete:
                 removeAll();
                 break;
         }
     }
-    public void search(){
+
+    public void search() {
         if (!TextUtils.isEmpty(editText.getText().toString())) {
+            page = 2;
+            endLessOnScrollListener.resetPreviousTotal();
             url = editText.getText().toString();
             Log.d("SearchActivity", toUtf8(url));
-            for (int i = 0; i < arrayList.size(); i++) {
-               if(arrayList.get(i).equals(editText.getText().toString())){
-                   arrayList.remove(editText.getText().toString());
-               }
-            }
 
-            arrayList.add(0,editText.getText().toString());
-            if (arrayList.size() == 11){
+            if (arrayList.contains(editText.getText().toString())) {
+                int index = arrayList.indexOf(editText.getText().toString());
+                Collections.swap(arrayList, 0, index);
+            }
+//            for (int i = 0; i < arrayList.size(); i++) {
+//                if (arrayList.get(i).equals(editText.getText().toString())) {
+//                    arrayList.remove(editText.getText().toString());
+//                }
+//            }
+
+            else {
+                arrayList.add(0, editText.getText().toString());
+            }
+            if (arrayList.size() == 11) {
                 arrayList.remove(10);
             }
 //            adapter.setArrayList(arrayList);
@@ -182,21 +206,24 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             option.setVisibility(View.GONE);
             foodView.setVisibility(View.VISIBLE);
             foodMoreAdapter = new FoodMoreAdapter(this);
-            getGsonRequest("http://food.boohee.com/fb/v1/search?page=1&order_asc=desc&q="+toUtf8(url));
+            getGsonRequest("http://food.boohee.com/fb/v1/search?page=1&order_asc=desc&q=" + toUtf8(url));
+            foodView.setLayoutManager(foodmanager);
             foodView.setAdapter(foodMoreAdapter);
-            foodView.setLayoutManager(manager1);
         }
     }
-    public void removeAll(){
+
+    public void removeAll() {
         arrayList.clear();
         history.setVisibility(View.GONE);
     }
-    public void clearAll(){
+
+    public void clearAll() {
         history.setVisibility(View.VISIBLE);
         option.setVisibility(View.VISIBLE);
         foodView.setVisibility(View.GONE);
         editText.setText("");
     }
+
     protected void getGsonRequest(String url) {
         GsonRequest<SearchFoodBean> gsonRequest = new GsonRequest<>(
                 SearchFoodBean.class, url, new Response.Listener<SearchFoodBean>() {
@@ -226,14 +253,21 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         });
         VolleySingleton.getInstance().addRequest(gsonRequest);
     }
+
     public static String toUtf8(String str) {
-                 String result = null;
-                 try {
-                     result = URLEncoder.encode(str, "UTF-8");
-                     } catch (UnsupportedEncodingException e) {
-                        // TODO Auto-generated catch block
-                         e.printStackTrace();
-                     }
-                 return result;
-             }
+        String result = null;
+        try {
+            result = URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public void setUrl(String url) {
+        editText.setText(url);
+        search();
+    }
 }
