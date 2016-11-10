@@ -15,8 +15,8 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //第一：默认初始化
-        Bmob.initialize(this, "268653fa0447912efad219af5371303c");
+//        //第一：默认初始化
+//        Bmob.initialize(this, "268653fa0447912efad219af5371303c");
         setContentView(getLayout());
 
         initView();

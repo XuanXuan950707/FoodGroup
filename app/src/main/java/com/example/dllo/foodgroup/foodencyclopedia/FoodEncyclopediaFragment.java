@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.foodgroup.Bean.GridBean;
 import com.example.dllo.foodgroup.R;
+import com.example.dllo.foodgroup.foodencyclopedia.compare.CompareActivity;
 import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreActivity;
 import com.example.dllo.foodgroup.foodencyclopedia.search.SearchActivity;
 import com.example.dllo.foodgroup.tools.GsonRequest;
@@ -39,7 +40,8 @@ public class FoodEncyclopediaFragment extends BaseFragment implements KindAndGro
     private ArrayList<GridBean> restaurantList;
     private GridViewAdapter restaurantAdapter;
     private LinearLayout search;
-//    private Button searchButton;
+    private LinearLayout comparebtn;
+    //    private Button searchButton;
 //    private ImageButton searchImageButton;
 
     @Override
@@ -117,7 +119,21 @@ public class FoodEncyclopediaFragment extends BaseFragment implements KindAndGro
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
 //                intent.setClass(FoodEncyclopediaFragment,)
+
+                intent.setClass(getActivity(), SearchActivity.class);
+                intent.putExtra("address","2");
                 startActivity(intent);
+            }
+        });
+        comparebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getActivity(), CompareActivity.class);
+//                intent.setClass(FoodEncyclopediaFragment,)
+
+//                intent.setClass(getActivity(), SearchActivity.class);
+//                intent1.putExtra("address","1");
+                startActivity(intent1);
             }
         });
 //        searchImageButton.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +150,7 @@ public class FoodEncyclopediaFragment extends BaseFragment implements KindAndGro
 
     @Override
     protected void initView() {
+        comparebtn = bindView(R.id.foodencylope_comparebtn);
         headViewLayout = (LinearLayout) LayoutInflater.from(getContext()).inflate
                 (R.layout.activity_headfoodencylopedia,null);
         classGridView = bindView(R.id.foodencylope_class);

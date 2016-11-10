@@ -78,6 +78,11 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         textView.setText(text);
         return this;
     }
+    public BaseViewHolder setTextVisible(int id){
+        TextView textView = getView(id);
+        textView.setVisibility(View.VISIBLE);
+        return this;
+    }
 
     public BaseViewHolder setImage(int id,int imgId){
         ImageView imageView = getView(id);

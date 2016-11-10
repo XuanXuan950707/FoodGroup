@@ -1,5 +1,6 @@
 package com.example.dllo.foodgroup.foodencyclopedia.search;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,10 +19,12 @@ import com.android.volley.VolleyError;
 import com.example.dllo.foodgroup.Bean.FoodMoreBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseActivity;
+import com.example.dllo.foodgroup.foodencyclopedia.compare.CompareActivity;
 import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreAdapter;
 import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreItemBean;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
+import com.example.dllo.foodgroup.tools.SearchListener;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 import com.example.dllo.foodgroup.tools.WebActivityListener;
 
@@ -33,7 +36,7 @@ import java.util.Collections;
 /**
  * Created by dllo on 16/10/27.
  */
-public class SearchActivity extends BaseActivity implements View.OnClickListener, WebActivityListener {
+public class SearchActivity extends BaseActivity implements View.OnClickListener, WebActivityListener ,SearchListener{
 
     private ImageButton returnButton;
     private ImageButton searchButton;
@@ -62,6 +65,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private int page = 2;
     private LinearLayoutManager foodmanager;
     private EndLessOnScrollListener endLessOnScrollListener;
+    private String address;
 
     @Override
     protected int getLayout() {
@@ -71,15 +75,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initView() {
 
+        historyview = bindView(R.id.search_recyclerview);
+        editText = bindView(R.id.searchfood_edit);
         clear = bindView(R.id.searchfood_clear);
         foodView = bindView(R.id.searchfood_recycler);
-        option = bindView(R.id.searchfood_options);
-        history = bindView(R.id.searchfood_searchHistory);
-        remove = bindView(R.id.searchfood_delete);
-        editText = bindView(R.id.searchfood_edit);
-        returnButton = bindView(R.id.searchfood_return);
-        searchButton = bindView(R.id.searchfood_search);
-        historyview = bindView(R.id.search_recyclerview);
         apple = bindView(R.id.searchfood_apple);
         banana = bindView(R.id.searchfood_banana);
         bun = bindView(R.id.searchfood_bun);
@@ -90,12 +89,20 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         egg = bindView(R.id.searchfood_egg);
         soybean = bindView(R.id.searchfood_soybean);
         strawberry = bindView(R.id.searchfood_strawberry);
+        returnButton = bindView(R.id.searchfood_return);
+        searchButton = bindView(R.id.searchfood_search);
+        remove = bindView(R.id.searchfood_delete);
+        history = bindView(R.id.searchfood_searchHistory);
+        option = bindView(R.id.searchfood_options);
         setClick(this, returnButton, searchButton, apple, banana, bun, potato, yoghurt, rice,
                 corn, egg, soybean, strawberry, remove, clear);
     }
 
     @Override
     protected void iniData() {
+        Intent intent = getIntent();
+        address = intent.getStringExtra("address");
+//        Log.d("SearchActivity", intent.getStringExtra("address"));
         arrayList = new ArrayList<>();
         itemBeen = new ArrayList<>();
         if (arrayList.size() == 0) {
@@ -206,6 +213,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             option.setVisibility(View.GONE);
             foodView.setVisibility(View.VISIBLE);
             foodMoreAdapter = new FoodMoreAdapter(this);
+            foodMoreAdapter.setSearchListenner(this);
+            foodMoreAdapter.setAddress(address);
             getGsonRequest("http://food.boohee.com/fb/v1/search?page=1&order_asc=desc&q=" + toUtf8(url));
             foodView.setLayoutManager(foodmanager);
             foodView.setAdapter(foodMoreAdapter);
@@ -237,6 +246,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     bean.setHealth_light(response.getItems().get(i).getHealth_light());
                     bean.setWeight(response.getItems().get(i).getWeight());
                     bean.setCalory(response.getItems().get(i).getCalory());
+                    bean.setCode(response.getItems().get(i).getCode());
 //                    arrayList.add(bean);
                     itemBeen.add(bean);
                 }
@@ -269,5 +279,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     public void setUrl(String url) {
         editText.setText(url);
         search();
+    }
+    public static final int RESULT_CODE = 100;
+
+    @Override
+    public void setCode(String code) {
+        Intent intent = new Intent(SearchActivity.this, CompareActivity.class);
+        intent.putExtra("code",code);
+        setResult(RESULT_CODE,intent);
+        finish();
     }
 }
