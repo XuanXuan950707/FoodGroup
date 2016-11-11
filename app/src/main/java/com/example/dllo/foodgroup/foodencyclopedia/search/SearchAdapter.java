@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseViewHolder;
+import com.example.dllo.foodgroup.tools.SearchListener;
 import com.example.dllo.foodgroup.tools.WebActivityListener;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 public class SearchAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private ArrayList<String> arrayList;
     private Context context;
-    private WebActivityListener webActivityListener;
+    private SearchListener searchListener;
 
-    public void setWebActivityListener(WebActivityListener webActivityListener) {
-        this.webActivityListener = webActivityListener;
+    public void setSearchListener(SearchListener searchListener) {
+        this.searchListener = searchListener;
     }
 
     public SearchAdapter(Context context) {
@@ -44,7 +45,7 @@ public class SearchAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         holder.setItemClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                webActivityListener.setUrl(arrayList.get(position));
+                searchListener.setHistoryMessage(arrayList.get(position));
             }
         });
     }

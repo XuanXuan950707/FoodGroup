@@ -51,18 +51,18 @@
                 android:src="@mipmap/img_compare_add"
                 android:id="@+id/compare_leftMessage"
                 />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@mipmap/ic_delete_default"
                     android:layout_alignParentRight="true"
                     android:id="@+id/compare_leftclear"
                     android:visibility="gone"
+                    android:background="@null"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="苹果"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/compare_lefttitle"
@@ -84,18 +84,18 @@
                     android:src="@mipmap/img_compare_add"
                     android:id="@+id/compare_rightMessage"
                     />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@mipmap/ic_delete_default"
                     android:layout_alignParentRight="true"
                     android:id="@+id/compare_rightclear"
+                    android:background="@null"
                     android:visibility="gone"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="苹果"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/compare_righttitle"

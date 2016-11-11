@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +37,7 @@ import java.util.Collections;
 /**
  * Created by dllo on 16/10/27.
  */
-public class SearchActivity extends BaseActivity implements View.OnClickListener, WebActivityListener ,SearchListener{
+public class SearchActivity extends BaseActivity implements View.OnClickListener,SearchListener{
 
     private ImageButton returnButton;
     private ImageButton searchButton;
@@ -44,16 +45,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private ArrayList<String> arrayList;
     private EditText editText;
     private SearchAdapter adapter;
-    private Button apple;
-    private Button banana;
-    private Button bun;
-    private Button potato;
-    private Button yoghurt;
-    private Button rice;
-    private Button corn;
-    private Button egg;
-    private Button soybean;
-    private Button strawberry;
     private LinearLayout history;
     private LinearLayout remove;
     private LinearLayout option;
@@ -66,6 +57,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private LinearLayoutManager foodmanager;
     private EndLessOnScrollListener endLessOnScrollListener;
     private String address;
+    private GridView gridView;
+    private KeywordsAdapter keywordsAdapter;
+    private String keywords ="http://food.boohee.com/fb/v1/keywords?app_device=Android&app_version=2.6&channel=baidu&user_key=90026eec-a1ef-44ff-87bb-e196d7b2848f&token=WDQy4wnxCkVbEy2zG4cB&phone_model=ZTE+N909&os_version=4.1.2";
 
     @Override
     protected int getLayout() {
@@ -75,27 +69,17 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initView() {
 
+        gridView = bindView(R.id.searchfood_gridView);
         historyview = bindView(R.id.search_recyclerview);
         editText = bindView(R.id.searchfood_edit);
         clear = bindView(R.id.searchfood_clear);
         foodView = bindView(R.id.searchfood_recycler);
-        apple = bindView(R.id.searchfood_apple);
-        banana = bindView(R.id.searchfood_banana);
-        bun = bindView(R.id.searchfood_bun);
-        potato = bindView(R.id.searchfood_potato);
-        yoghurt = bindView(R.id.searchfood_yoghurt);
-        rice = bindView(R.id.searchfood_rice);
-        corn = bindView(R.id.searchfood_corn);
-        egg = bindView(R.id.searchfood_egg);
-        soybean = bindView(R.id.searchfood_soybean);
-        strawberry = bindView(R.id.searchfood_strawberry);
         returnButton = bindView(R.id.searchfood_return);
         searchButton = bindView(R.id.searchfood_search);
         remove = bindView(R.id.searchfood_delete);
         history = bindView(R.id.searchfood_searchHistory);
         option = bindView(R.id.searchfood_options);
-        setClick(this, returnButton, searchButton, apple, banana, bun, potato, yoghurt, rice,
-                corn, egg, soybean, strawberry, remove, clear);
+        setClick(this, returnButton, searchButton, remove, clear);
     }
 
     @Override
@@ -108,8 +92,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         if (arrayList.size() == 0) {
             history.setVisibility(View.GONE);
         }
+        keywordsAdapter = new KeywordsAdapter(this);
+        keywordsAdapter.setSearchListener(this);
+        getKeywords(keywords);
+        gridView.setAdapter(keywordsAdapter);
         adapter = new SearchAdapter(this);
-        adapter.setWebActivityListener(this);
+        adapter.setSearchListener(this);
         adapter.setArrayList(arrayList);
         historyview.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -136,46 +124,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 onBackPressed();
                 break;
             case R.id.searchfood_search:
-                search();
-                break;
-            case R.id.searchfood_apple:
-                editText.setText("苹果");
-                search();
-                break;
-            case R.id.searchfood_banana:
-                editText.setText("香蕉");
-                search();
-                break;
-            case R.id.searchfood_bun:
-                editText.setText("馒头");
-                search();
-                break;
-            case R.id.searchfood_corn:
-                editText.setText("玉米");
-                search();
-                break;
-            case R.id.searchfood_egg:
-                editText.setText("鸡蛋");
-                search();
-                break;
-            case R.id.searchfood_potato:
-                editText.setText("红薯");
-                search();
-                break;
-            case R.id.searchfood_rice:
-                editText.setText("米饭");
-                search();
-                break;
-            case R.id.searchfood_soybean:
-                editText.setText("豆浆");
-                search();
-                break;
-            case R.id.searchfood_strawberry:
-                editText.setText("草莓");
-                search();
-                break;
-            case R.id.searchfood_yoghurt:
-                editText.setText("酸奶");
                 search();
                 break;
             case R.id.searchfood_delete:
@@ -233,6 +181,22 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         editText.setText("");
     }
 
+    protected void getKeywords(String url){
+        GsonRequest<KeywordsBean> gsonRequest = new GsonRequest<>(
+                KeywordsBean.class, url, new Response.Listener<KeywordsBean>() {
+            @Override
+            public void onResponse(KeywordsBean response) {
+                Log.d("SearchActivity", response.getKeywords().get(1));
+                keywordsAdapter.setBean(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        VolleySingleton.getInstance().addRequest(gsonRequest);
+    }
     protected void getGsonRequest(String url) {
         GsonRequest<SearchFoodBean> gsonRequest = new GsonRequest<>(
                 SearchFoodBean.class, url, new Response.Listener<SearchFoodBean>() {
@@ -275,11 +239,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         return result;
     }
 
-    @Override
-    public void setUrl(String url) {
-        editText.setText(url);
-        search();
-    }
     public static final int RESULT_CODE = 100;
 
     @Override
@@ -288,5 +247,17 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         intent.putExtra("code",code);
         setResult(RESULT_CODE,intent);
         finish();
+    }
+
+    @Override
+    public void setKeywords(String keyword) {
+        editText.setText(keyword);
+        search();
+    }
+
+    @Override
+    public void setHistoryMessage(String historyMessage) {
+        editText.setText(historyMessage);
+        search();
     }
 }

@@ -28,12 +28,10 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
 
     private ImageButton back;
     private ImageView leftMessage;
-    private ImageView leftClear;
+    private ImageButton leftClear;
     private ImageView rightMessage;
-    private ImageView rightClear;
+    private ImageButton rightClear;
     private String group;
-    private CompareBean leftBean;
-    private CompareBean rightBean;
     private TextView lefttitle;
     private TextView righttitle;
     private ArrayList<CompareItemBean> arrayList = new ArrayList<>();
@@ -57,7 +55,7 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
         rightMessage = bindView(R.id.compare_rightMessage);
         leftClear = bindView(R.id.compare_leftclear);
         rightClear = bindView(R.id.compare_rightclear);
-        setClick(this,back,leftMessage,rightMessage);
+        setClick(this,back,leftMessage,rightMessage,leftClear,rightClear);
     }
 
     @Override
@@ -82,7 +80,33 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
                 group = "right";
                 addMessage();
                 break;
+            case R.id.compare_leftclear:
+                setLeftClear();
+                break;
+            case R.id.compare_rightclear:
+                setRightClear();
+                break;
         }
+    }
+    public void setLeftClear(){
+        leftClear.setVisibility(View.GONE);
+        for (int i = 0; i < rightArrayList.size(); i++) {
+            rightArrayList.get(i).setLeft("");
+        }
+        adapter.setArrayList(rightArrayList);
+        leftMessage.setImageResource(R.mipmap.img_compare_add);
+        lefttitle.setText("");
+        leftArrayList.clear();
+    }
+    public void setRightClear(){
+        rightClear.setVisibility(View.GONE);
+        for (int i = 0; i < leftArrayList.size(); i++) {
+            leftArrayList.get(i).setRight("");
+        }
+        adapter.setArrayList(leftArrayList);
+        rightMessage.setImageResource(R.mipmap.img_compare_add);
+        righttitle.setText("");
+        rightArrayList.clear();
     }
     public static final int REQUSEST_CODE = 101;
     public void addMessage(){
@@ -104,7 +128,7 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
         }
     }
     protected void getLeftGsonRequest(String url) {
-        arrayList.clear();
+        leftClear.setVisibility(View.VISIBLE);
         leftArrayList.clear();
         GsonRequest<CompareBean> gsonRequest = new GsonRequest<>(
                 CompareBean.class, url, new Response.Listener<CompareBean>() {
@@ -135,7 +159,7 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
         VolleySingleton.getInstance().addRequest(gsonRequest);
     }
     protected void getRightGsonRequest(String url) {
-        arrayList.clear();
+        rightClear.setVisibility(View.VISIBLE);
         rightArrayList.clear();
         GsonRequest<CompareBean> gsonRequest = new GsonRequest<>(
                 CompareBean.class, url, new Response.Listener<CompareBean>() {
@@ -166,28 +190,42 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
         VolleySingleton.getInstance().addRequest(gsonRequest);
     }
     public void finalArraylist(){
-        ArrayList<CompareItemBean> leftTestArraylist = leftArrayList;
-        ArrayList<CompareItemBean> rightTestArraylist = rightArrayList;
+        arrayList.clear();
         Log.d("CompareActivity", "leftArrayList.size():" + leftArrayList.size());
         Log.d("CompareActivity", "rightArrayList.size():" + rightArrayList.size());
-        if (leftTestArraylist.size() >= rightTestArraylist.size()){
-            arrayList.addAll(leftTestArraylist);
-            for (int i = 0;i < leftArrayList.size();i++){
-                for (int j = 0 ;j < rightArrayList.size();j++){
-                    if (rightTestArraylist.get(j).getCenter() == leftTestArraylist.get(i).getCenter()){
-                        arrayList.get(i).setRight(rightTestArraylist.get(j).getRight());
-                        Log.d("CompareActivity", rightTestArraylist.get(j).getRight());
+        ArrayList<String> leftSize  = new ArrayList<>();
+        for (int i = 0; i < leftArrayList.size(); i++) {
+            leftSize.add(i+"");
+        }
+        ArrayList<String> rightSize = new ArrayList<>();
+        for (int i = 0; i < rightArrayList.size(); i++) {
+            rightSize.add(i+"");
+        }
+        if (leftArrayList.size() >= rightArrayList.size()){
+            arrayList.addAll(leftArrayList);
+            for (int i = 0 ; i < leftArrayList.size();i++){
+                for (int j = 0;j < rightArrayList.size();j++){
+                    if (rightArrayList.get(j).getCenter().equals(leftArrayList.get(i).getCenter())){
+                        arrayList.get(i).setRight(rightArrayList.get(j).getRight());
+                        rightSize.remove(j+"");
                     }
                 }
             }
+            for (int i = 0; i < rightSize.size(); i++) {
+                arrayList.add(rightArrayList.get(Integer.parseInt(rightSize.get(i))));
+            }
         }else if(leftArrayList.size() < rightArrayList.size()){
-            arrayList.addAll(rightTestArraylist);
-            for (int i = 0;i < rightTestArraylist.size();i++){
-                for (int j = 0 ;j < leftTestArraylist.size();j++){
-                    if (leftTestArraylist.get(j).getCenter() == rightTestArraylist.get(i).getCenter()){
-                        arrayList.get(i).setLeft(leftTestArraylist.get(j).getLeft());
+            arrayList.addAll(rightArrayList);
+            for (int i = 0;i < rightArrayList.size();i++){
+                for (int j = 0 ;j < leftArrayList.size();j++){
+                    if (leftArrayList.get(j).getCenter().equals(rightArrayList.get(i).getCenter()) ){
+                        arrayList.get(i).setLeft(leftArrayList.get(j).getLeft());
+                        leftSize.remove(j+"");
                     }
                 }
+            }
+            for (int i = 0; i < leftSize.size(); i++) {
+                arrayList.add(leftArrayList.get(Integer.parseInt(leftSize.get(i))));
             }
         }
     }

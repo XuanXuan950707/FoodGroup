@@ -5,4 +5,6 @@ package com.example.dllo.foodgroup.tools;
  */
 public interface SearchListener {
     void setCode(String code);
+    void setKeywords(String keyword);
+    void setHistoryMessage(String historyMessage);
 }
