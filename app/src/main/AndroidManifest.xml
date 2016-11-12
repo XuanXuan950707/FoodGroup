@@ -41,6 +41,7 @@
         <activity android:name=".strolleat.homepage.AdvertActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".main.LoginActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".foodencyclopedia.compare.CompareActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".personage.MyCollect" android:theme="@style/CustomTitle"/>
     </application>
 
 </manifest>

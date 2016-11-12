@@ -87,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
+        android:id="@+id/personage_mycollect"
         >
         <ImageView
             android:layout_width="wrap_content"

@@ -12,9 +12,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseActivity;
+import com.example.dllo.foodgroup.letorm.DBTool;
+import com.example.dllo.foodgroup.letorm.WebCollectBean;
 import com.example.dllo.foodgroup.strolleat.knowledge.KnowledgeFragment;
 
 /**
@@ -24,6 +29,12 @@ public class StrolleatWebActivity extends BaseActivity implements View.OnClickLi
 
     private WebView webView;
     private ImageButton back;
+    private String title;
+    private String url;
+    private LinearLayout collect;
+    private DBTool dbTool;
+    private ImageView heart;
+    private TextView collectText;
 
     @Override
     protected int getLayout() {
@@ -32,16 +43,22 @@ public class StrolleatWebActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initView() {
+        heart = bindView(R.id.strolleatweb_heart);
+        collectText = bindView(R.id.strolleatweb_collectText);
         webView = bindView(R.id.strolleatweb_webview);
         back = bindView(R.id.strolleatweb_return);
-
-        setClick(this, back);
+        collect = bindView(R.id.strolleatweb_collect);
+        setClick(this, back,collect);
     }
 
     @Override
     protected void iniData() {
+        dbTool = DBTool.getInstance();
         Intent intent = getIntent();
-        webView.loadUrl(intent.getStringExtra("url"));
+        title = intent.getStringExtra("title");
+        Log.d("StrolleatWebActivity", intent.getStringExtra("title"));
+        url = intent.getStringExtra("url");
+        webView.loadUrl(url);
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
         webView.setWebViewClient(new WebViewClient());
         //启用支持javascript
@@ -87,7 +104,19 @@ public class StrolleatWebActivity extends BaseActivity implements View.OnClickLi
             case R.id.strolleatweb_return:
                 onBackPressed();
                 break;
+            case R.id.strolleatweb_collect:
+                setCollect();
+                break;
 
         }
+    }
+
+    private void setCollect() {
+        heart.setImageResource(R.mipmap.ic_favorate_checked);
+        collectText.setText("已收藏");
+        WebCollectBean bean = new WebCollectBean();
+        bean.setTitle(title);
+        bean.setUrl(url);
+        dbTool.insertWebCollect(bean);
     }
 }

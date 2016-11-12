@@ -17,13 +17,14 @@ import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 import com.example.dllo.foodgroup.tools.WebActivityListener;
+import com.example.dllo.foodgroup.tools.WebCollectListener;
 
 import java.util.ArrayList;
 
 /**
  * Created by dllo on 16/10/24.
  */
-public class AppraisalFragment extends BaseFragment implements WebActivityListener{
+public class AppraisalFragment extends BaseFragment implements WebCollectListener{
 
     private RecyclerView rv;
     private SwipeRefreshLayout refreshLayout;
@@ -37,7 +38,7 @@ public class AppraisalFragment extends BaseFragment implements WebActivityListen
     protected void initData() {
         arrayList = new ArrayList<>();
         adapter = new AppraisalAdapter(getContext());
-        adapter.setListener(this);
+        adapter.setWebCollectListener(this);
         getGsonRequest(url);
         rv.setAdapter(adapter);
         manager = new LinearLayoutManager(getContext());
@@ -112,9 +113,10 @@ public class AppraisalFragment extends BaseFragment implements WebActivityListen
     }
 
     @Override
-    public void setUrl(String url) {
+    public void setCollectMessage(String title, String url) {
         Intent intent = new Intent(getActivity(), StrolleatWebActivity.class);
         intent.putExtra("url",url);
+        intent.putExtra("title",title);
         startActivity(intent);
     }
 }

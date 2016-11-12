@@ -85,12 +85,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_centerInParent="true"
+                android:id="@+id/strolleatweb_collect"
                 >
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_favorate_unchecked"
                 android:padding="1dp"
+                android:id="@+id/strolleatweb_heart"
                 />
             <TextView
                 android:layout_marginTop="12dp"
@@ -98,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:text="收藏"
                 android:textSize="17dp"
+                android:id="@+id/strolleatweb_collectText"
                 />
             </LinearLayout>
         </RelativeLayout>

@@ -23,11 +23,14 @@ import com.example.dllo.foodgroup.base.BaseActivity;
 import com.example.dllo.foodgroup.foodencyclopedia.compare.CompareActivity;
 import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreAdapter;
 import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreItemBean;
+import com.example.dllo.foodgroup.letorm.DBTool;
+import com.example.dllo.foodgroup.letorm.SearchHistory;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.SearchListener;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 import com.example.dllo.foodgroup.tools.WebActivityListener;
+import com.litesuits.orm.LiteOrm;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -60,6 +63,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private GridView gridView;
     private KeywordsAdapter keywordsAdapter;
     private String keywords ="http://food.boohee.com/fb/v1/keywords?app_device=Android&app_version=2.6&channel=baidu&user_key=90026eec-a1ef-44ff-87bb-e196d7b2848f&token=WDQy4wnxCkVbEy2zG4cB&phone_model=ZTE+N909&os_version=4.1.2";
+    private LiteOrm liteOrm;
+    private DBTool dbTool;
+
 
     @Override
     protected int getLayout() {
@@ -89,9 +95,24 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 //        Log.d("SearchActivity", intent.getStringExtra("address"));
         arrayList = new ArrayList<>();
         itemBeen = new ArrayList<>();
-        if (arrayList.size() == 0) {
-            history.setVisibility(View.GONE);
-        }
+        dbTool = DBTool.getInstance();
+        dbTool.queryAllHistory(new DBTool.OnQueryListener() {
+            @Override
+            public void onQuery(ArrayList<SearchHistory> histories) {
+                if (histories.size() != 0){
+                    for (int i = 0 ; i < histories.size() ; i++){
+                        arrayList.add(histories.get(i).getSearchName());
+                    }
+                }
+
+                if (arrayList.size() == 0) {
+                    history.setVisibility(View.GONE);
+                }else {
+                    history.setVisibility(View.VISIBLE);
+                    adapter.setArrayList(arrayList);
+                }
+            }
+        });
         keywordsAdapter = new KeywordsAdapter(this);
         keywordsAdapter.setSearchListener(this);
         getKeywords(keywords);
@@ -260,4 +281,28 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         editText.setText(historyMessage);
         search();
     }
+
+    @Override
+    public void finish() {
+        ArrayList<SearchHistory> searchHistories = new ArrayList<>();
+        dbTool.deleteAllHistory();
+        for (int i = 0; i < arrayList.size(); i++) {
+            SearchHistory searchHistory = new SearchHistory();
+//            searchHistory.setId(i);
+            searchHistory.setSearchName(arrayList.get(i));
+            searchHistories.add(searchHistory);
+//            searchHistories.get(i).setId(i);
+//            searchHistories.get(i).setSearchName(arrayList.get(i));
+        }
+        dbTool.insertSearchHistory(searchHistories);
+        super.finish();
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+    }
+
+
 }

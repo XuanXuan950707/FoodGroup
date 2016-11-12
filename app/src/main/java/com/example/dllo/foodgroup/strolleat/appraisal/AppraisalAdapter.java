@@ -11,6 +11,7 @@ import com.example.dllo.foodgroup.Bean.AppraisalItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseViewHolder;
 import com.example.dllo.foodgroup.tools.WebActivityListener;
+import com.example.dllo.foodgroup.tools.WebCollectListener;
 
 import java.util.ArrayList;
 
@@ -20,11 +21,15 @@ import java.util.ArrayList;
 public class AppraisalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     Context context;
     ArrayList<AppraisalItemBean> arrayList;
-    WebActivityListener listener;
+    private WebCollectListener webCollectListener;
 
-    public void setListener(WebActivityListener listener) {
-        this.listener = listener;
+    public void setWebCollectListener(WebCollectListener webCollectListener) {
+        this.webCollectListener = webCollectListener;
     }
+
+//    public void setListener(WebActivityListener listener) {
+//        this.listener = listener;
+//    }
 
     public AppraisalAdapter(Context context) {
         this.context = context;
@@ -58,7 +63,9 @@ public class AppraisalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         holder.setItemClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.setUrl(arrayList.get(position).getLink());
+//                listener.setUrl(arrayList.get(position).getLink());
+                webCollectListener.setCollectMessage
+                        (arrayList.get(position).getTitle(),arrayList.get(position).getLink());
             }
         });
     }
@@ -67,19 +74,19 @@ public class AppraisalAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public int getItemCount() {
         return arrayList == null? 0 : arrayList.size();
     }
-    public class AppraisalViewHolder extends RecyclerView.ViewHolder{
-
-        private final ImageView background;
-        private final TextView source;
-        private final TextView title;
-        private final TextView tail;
-
-        public AppraisalViewHolder(View itemView) {
-            super(itemView);
-            background = (ImageView) itemView.findViewById(R.id.appraisal_item_background);
-            source = (TextView) itemView.findViewById(R.id.appraisal_item_source);
-            title = (TextView) itemView.findViewById(R.id.appraisal_item_title);
-            tail = (TextView) itemView.findViewById(R.id.appraisal_item_tail);
-        }
-    }
+//    public class AppraisalViewHolder extends RecyclerView.ViewHolder{
+//
+//        private final ImageView background;
+//        private final TextView source;
+//        private final TextView title;
+//        private final TextView tail;
+//
+//        public AppraisalViewHolder(View itemView) {
+//            super(itemView);
+//            background = (ImageView) itemView.findViewById(R.id.appraisal_item_background);
+//            source = (TextView) itemView.findViewById(R.id.appraisal_item_source);
+//            title = (TextView) itemView.findViewById(R.id.appraisal_item_title);
+//            tail = (TextView) itemView.findViewById(R.id.appraisal_item_tail);
+//        }
+//    }
 }
