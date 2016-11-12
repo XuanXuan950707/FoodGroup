@@ -113,6 +113,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 }
             }
         });
+
         keywordsAdapter = new KeywordsAdapter(this);
         keywordsAdapter.setSearchListener(this);
         getKeywords(keywords);
@@ -179,7 +180,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 //            adapter.setArrayList(arrayList);
             itemBeen.clear();
             adapter.setArrayList(arrayList);
-            option.setVisibility(View.GONE);
+
             foodView.setVisibility(View.VISIBLE);
             foodMoreAdapter = new FoodMoreAdapter(this);
             foodMoreAdapter.setSearchListenner(this);
@@ -187,6 +188,18 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             getGsonRequest("http://food.boohee.com/fb/v1/search?page=1&order_asc=desc&q=" + toUtf8(url));
             foodView.setLayoutManager(foodmanager);
             foodView.setAdapter(foodMoreAdapter);
+            option.setVisibility(View.GONE);
+            ArrayList<SearchHistory> searchHistories = new ArrayList<>();
+            dbTool.deleteAllHistory();
+            for (int i = 0; i < arrayList.size(); i++) {
+                SearchHistory searchHistory = new SearchHistory();
+//            searchHistory.setId(i);
+                searchHistory.setSearchName(arrayList.get(i));
+                searchHistories.add(searchHistory);
+//            searchHistories.get(i).setId(i);
+//            searchHistories.get(i).setSearchName(arrayList.get(i));
+            }
+            dbTool.insertSearchHistory(searchHistories);
         }
     }
 
@@ -284,17 +297,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void finish() {
-        ArrayList<SearchHistory> searchHistories = new ArrayList<>();
-        dbTool.deleteAllHistory();
-        for (int i = 0; i < arrayList.size(); i++) {
-            SearchHistory searchHistory = new SearchHistory();
-//            searchHistory.setId(i);
-            searchHistory.setSearchName(arrayList.get(i));
-            searchHistories.add(searchHistory);
-//            searchHistories.get(i).setId(i);
-//            searchHistories.get(i).setSearchName(arrayList.get(i));
-        }
-        dbTool.insertSearchHistory(searchHistories);
+
         super.finish();
     }
 

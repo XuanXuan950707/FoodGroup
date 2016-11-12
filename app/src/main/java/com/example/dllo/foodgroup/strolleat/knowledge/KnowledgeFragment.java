@@ -17,13 +17,14 @@ import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 import com.example.dllo.foodgroup.tools.WebActivityListener;
+import com.example.dllo.foodgroup.tools.WebCollectListener;
 
 import java.util.ArrayList;
 
 /**
  * Created by dllo on 16/10/24.
  */
-public class KnowledgeFragment extends BaseFragment implements WebActivityListener{
+public class KnowledgeFragment extends BaseFragment implements WebCollectListener{
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
@@ -36,7 +37,7 @@ public class KnowledgeFragment extends BaseFragment implements WebActivityListen
     protected void initData() {
         arraylist = new ArrayList<>();
         adapter = new KnowledgeAdapter(getContext());
-        adapter.setWebActivityListener(this);
+        adapter.setWebCollectListener(this);
         getGsonRequest(url);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -97,9 +98,10 @@ public class KnowledgeFragment extends BaseFragment implements WebActivityListen
     }
 
     @Override
-    public void setUrl(String url) {
+    public void setCollectMessage(String title, String url) {
         Intent intent = new Intent(getActivity(), StrolleatWebActivity.class);
         intent.putExtra("url",url);
+        intent.putExtra("title",title);
         startActivity(intent);
     }
 }

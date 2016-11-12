@@ -4,7 +4,9 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.dllo.foodgroup.tools.MyApp;
+import com.example.dllo.foodgroup.tools.WebCollectListener;
 import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.assit.WhereBuilder;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
@@ -67,8 +69,8 @@ public class DBTool {
         threadPool.execute(new QueryRunnable(onQueryListener));
     }
 
-    public void queryAllWebCollect(OnQueryListener onQueryListener){
-        threadPool.execute(new QueryRunnable(onQueryListener));
+    public void queryAllWebCollect(OnQueryCollectListener onQueryListener){
+        threadPool.execute(new QueryCollectRunnable(onQueryListener));
     }
 
     public void deleteAllHistory() {
@@ -76,6 +78,15 @@ public class DBTool {
             @Override
             public void run() {
                 liteOrm.deleteAll(SearchHistory.class);
+            }
+        });
+    }
+    public void deleteWebCollect(final String url){
+        threadPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                liteOrm.delete(new WhereBuilder(WebCollectBean.class)
+                        .where("url = ?",url));
             }
         });
     }
@@ -115,4 +126,42 @@ public class DBTool {
     public interface OnQueryListener {
         void onQuery(ArrayList<SearchHistory> histories);
     }
+
+    class QueryCollectRunnable implements Runnable{
+
+        private OnQueryCollectListener onQueryListener;
+
+        public QueryCollectRunnable(OnQueryCollectListener onQueryListener) {
+            this.onQueryListener = onQueryListener;
+        }
+
+        @Override
+        public void run() {
+            ArrayList<WebCollectBean> query = liteOrm.query(WebCollectBean.class);
+            handler.post(new CallBackCollectRunnable(onQueryListener, query));
+        }
+    }
+
+    class CallBackCollectRunnable implements Runnable {
+
+        private OnQueryCollectListener onQueryCollectListener;
+        private ArrayList<WebCollectBean> webCollectBeen;
+
+        public CallBackCollectRunnable(OnQueryCollectListener onQueryListener, ArrayList<WebCollectBean> webCollectBeen) {
+            this.onQueryCollectListener = onQueryListener;
+            this.webCollectBeen = webCollectBeen;
+        }
+
+        @Override
+        public void run() {
+            onQueryCollectListener.onQuery(webCollectBeen);
+        }
+    }
+
+
+    public interface OnQueryCollectListener {
+        void onQuery(ArrayList<WebCollectBean> webCollectBeen);
+    }
+
+
 }

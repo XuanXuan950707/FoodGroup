@@ -11,6 +11,7 @@ import com.example.dllo.foodgroup.Bean.KnowledgeItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseViewHolder;
 import com.example.dllo.foodgroup.tools.WebActivityListener;
+import com.example.dllo.foodgroup.tools.WebCollectListener;
 
 import java.util.ArrayList;
 
@@ -21,10 +22,10 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private Context context;
     private ArrayList<KnowledgeItemBean> arraylist;
-    WebActivityListener webActivityListener;
+    private WebCollectListener webCollectListener;
 
-    public void setWebActivityListener(WebActivityListener webActivityListener) {
-        this.webActivityListener = webActivityListener;
+    public void setWebCollectListener(WebCollectListener webCollectListener) {
+        this.webCollectListener = webCollectListener;
     }
 
     public KnowledgeAdapter(Context context) {
@@ -71,7 +72,9 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             holder.setItemClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    webActivityListener.setUrl(arraylist.get(position).getLink());
+//                    webActivityListener.setUrl(arraylist.get(position).getLink());
+                    webCollectListener.setCollectMessage
+                            (arraylist.get(position).getTitle(),arraylist.get(position).getLink());
                 }
             });
 
@@ -96,7 +99,8 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             holder.setItemClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    webActivityListener.setUrl(arraylist.get(position).getLink());
+                    webCollectListener.setCollectMessage
+                            (arraylist.get(position).getTitle(),arraylist.get(position).getLink());
                 }
             });
         }

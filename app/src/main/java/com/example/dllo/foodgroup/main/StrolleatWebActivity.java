@@ -22,6 +22,8 @@ import com.example.dllo.foodgroup.letorm.DBTool;
 import com.example.dllo.foodgroup.letorm.WebCollectBean;
 import com.example.dllo.foodgroup.strolleat.knowledge.KnowledgeFragment;
 
+import java.util.ArrayList;
+
 /**
  * Created by dllo on 16/10/31.
  */
@@ -58,6 +60,17 @@ public class StrolleatWebActivity extends BaseActivity implements View.OnClickLi
         title = intent.getStringExtra("title");
         Log.d("StrolleatWebActivity", intent.getStringExtra("title"));
         url = intent.getStringExtra("url");
+        dbTool.queryAllWebCollect(new DBTool.OnQueryCollectListener() {
+            @Override
+            public void onQuery(ArrayList<WebCollectBean> webCollectBeen) {
+                for (int i = 0; i < webCollectBeen.size(); i++) {
+                    if (webCollectBeen.get(i).getTitle().equals(title)&&webCollectBeen.get(i).getUrl().equals(url)){
+                        hadCollect();
+                    }
+                }
+            }
+        });
+
         webView.loadUrl(url);
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
         webView.setWebViewClient(new WebViewClient());
@@ -110,13 +123,22 @@ public class StrolleatWebActivity extends BaseActivity implements View.OnClickLi
 
         }
     }
-
-    private void setCollect() {
+    private void hadCollect(){
         heart.setImageResource(R.mipmap.ic_favorate_checked);
         collectText.setText("已收藏");
-        WebCollectBean bean = new WebCollectBean();
-        bean.setTitle(title);
-        bean.setUrl(url);
-        dbTool.insertWebCollect(bean);
+    }
+
+    private void setCollect() {
+        if (collectText.getText().equals("收藏")) {
+            hadCollect();
+            WebCollectBean bean = new WebCollectBean();
+            bean.setTitle(title);
+            bean.setUrl(url);
+            dbTool.insertWebCollect(bean);
+        }else if (collectText.getText().equals("已收藏")){
+            heart.setImageResource(R.mipmap.ic_favorate_unchecked);
+            collectText.setText("收藏");
+            dbTool.deleteWebCollect(url);
+        }
     }
 }
