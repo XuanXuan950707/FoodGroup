@@ -1,6 +1,9 @@
 package com.example.dllo.foodgroup.personage;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.widget.ListView;
 
 import com.example.dllo.foodgroup.R;
@@ -22,6 +25,7 @@ public class CollectArticleFragment extends BaseFragment implements WebCollectLi
     private ArrayList<WebCollectBean> arrayList;
     private DBTool dbTool;
     private CollectArticleAdapter articleAdapter;
+    private RefreshBroadCast refreshBroadCast;
 
     @Override
     protected void initData() {
@@ -36,9 +40,10 @@ public class CollectArticleFragment extends BaseFragment implements WebCollectLi
                 listView.setAdapter(articleAdapter);
             }
         });
-
-
-
+        refreshBroadCast = new RefreshBroadCast();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("CollectWeb");
+        getContext().registerReceiver(refreshBroadCast,filter);
     }
 
     @Override
@@ -57,5 +62,25 @@ public class CollectArticleFragment extends BaseFragment implements WebCollectLi
         intent.putExtra("url",url);
         intent.putExtra("title",title);
         startActivity(intent);
+    }
+
+    class RefreshBroadCast extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            dbTool.queryAllWebCollect(new DBTool.OnQueryCollectListener() {
+                @Override
+                public void onQuery(ArrayList<WebCollectBean> webCollectBeen) {
+                    articleAdapter.setArrayList(webCollectBeen);
+                    listView.setAdapter(articleAdapter);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unregisterReceiver(refreshBroadCast);
     }
 }

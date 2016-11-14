@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ECECEC"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="取消"
+            android:id="@+id/weightpop_no"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:id="@+id/weightpop_yes"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <com.example.dllo.foodgroup.tools.WheelView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/weightpop_leftwheelview"
+            >
+        </com.example.dllo.foodgroup.tools.WheelView>
+        <com.example.dllo.foodgroup.tools.WheelView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/weightpop_rightwheelview"
+            ></com.example.dllo.foodgroup.tools.WheelView>
+    </LinearLayout>
+</LinearLayout>

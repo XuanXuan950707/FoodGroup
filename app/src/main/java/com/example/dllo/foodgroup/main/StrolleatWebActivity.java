@@ -139,6 +139,8 @@ public class StrolleatWebActivity extends BaseActivity implements View.OnClickLi
             heart.setImageResource(R.mipmap.ic_favorate_unchecked);
             collectText.setText("收藏");
             dbTool.deleteWebCollect(url);
+            Intent intent = new Intent("CollectWeb");
+            sendBroadcast(intent);
         }
     }
 }
