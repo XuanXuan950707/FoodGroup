@@ -13,6 +13,7 @@ import com.example.dllo.foodgroup.main.StrolleatWebActivity;
 import com.example.dllo.foodgroup.strolleat.knowledge.KnowledgeAdapter;
 import com.example.dllo.foodgroup.Bean.KnowledgeBean;
 import com.example.dllo.foodgroup.Bean.KnowledgeItemBean;
+import com.example.dllo.foodgroup.tools.Data;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
@@ -30,15 +31,18 @@ public class CookingFragment extends BaseFragment implements WebCollectListener{
     private RecyclerView recyclerView;
     private ArrayList<KnowledgeItemBean> arrayList;
     private KnowledgeAdapter adapter;
-    private String url="http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=4&per=10";
+//    private String url="http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=4&per=10";
 
     private int page = 2;
+    private Data data;
+
     @Override
     protected void initData() {
+        data = new Data();
         arrayList = new ArrayList<>();
         adapter = new KnowledgeAdapter(getContext());
         adapter.setWebCollectListener(this);
-        getGsonRequest(url);
+        getGsonRequest(data.COOKING_HEAD+1+data.COOKING_END);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
@@ -46,7 +50,7 @@ public class CookingFragment extends BaseFragment implements WebCollectListener{
             @Override
             public void onRefresh() {
                 arrayList.clear();
-                getGsonRequest(url);
+                getGsonRequest(data.COOKING_HEAD+1+data.COOKING_END);
                 adapter.notifyDataSetChanged();
                 refreshLayout.setRefreshing(false);
             }
@@ -55,7 +59,7 @@ public class CookingFragment extends BaseFragment implements WebCollectListener{
             @Override
             protected void onLoadMore(int curentPage) {
                 getGsonRequest
-                        ("http://food.boohee.com/fb/v1/feeds/category_feed?page="+page+"&category=4&per=10");
+                        (data.COOKING_HEAD+page+data.COOKING_END);
                 page++;
             }
         });

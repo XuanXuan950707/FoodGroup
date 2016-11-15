@@ -12,6 +12,7 @@ import com.example.dllo.foodgroup.Bean.HomepageBean;
 import com.example.dllo.foodgroup.Bean.HomepageItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseFragment;
+import com.example.dllo.foodgroup.tools.Data;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
@@ -31,13 +32,15 @@ public class HomepageFragment extends BaseFragment implements HomepageItemLisene
     private HomepageAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
     private int page = 2;
+    private Data data;
 
     @Override
     protected void initData() {
+        data = new Data();
         arrayList = new ArrayList<>();
         adapter = new HomepageAdapter(getContext());
         adapter.setHomepageItemLisener(this);
-        getGsonRequest(url);
+        getGsonRequest(data.HOMEPAGE_HEAD+1+data.HOMEPAGE_END);
         rc.setAdapter(adapter);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager
                 (2,StaggeredGridLayoutManager.VERTICAL);
@@ -64,7 +67,7 @@ public class HomepageFragment extends BaseFragment implements HomepageItemLisene
         rc.addOnScrollListener(new EndLessOnScrollListener(manager) {
             @Override
             protected void onLoadMore(int curentPage) {
-                getGsonRequest("http://food.boohee.com/fb/v1/feeds/category_feed?page="+page+"&category=1&per=10");
+                getGsonRequest(data.HOMEPAGE_HEAD+page+data.HOMEPAGE_END);
                 page++;
             }
         });

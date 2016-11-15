@@ -25,6 +25,7 @@ import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreAdapter;
 import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreItemBean;
 import com.example.dllo.foodgroup.letorm.DBTool;
 import com.example.dllo.foodgroup.letorm.SearchHistory;
+import com.example.dllo.foodgroup.tools.Data;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.SearchListener;
@@ -62,9 +63,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private String address;
     private GridView gridView;
     private KeywordsAdapter keywordsAdapter;
-    private String keywords ="http://food.boohee.com/fb/v1/keywords?app_device=Android&app_version=2.6&channel=baidu&user_key=90026eec-a1ef-44ff-87bb-e196d7b2848f&token=WDQy4wnxCkVbEy2zG4cB&phone_model=ZTE+N909&os_version=4.1.2";
+//    private String keywords ="http://food.boohee.com/fb/v1/keywords?app_device=Android&app_version=2.6&channel=baidu&user_key=90026eec-a1ef-44ff-87bb-e196d7b2848f&token=WDQy4wnxCkVbEy2zG4cB&phone_model=ZTE+N909&os_version=4.1.2";
     private LiteOrm liteOrm;
     private DBTool dbTool;
+    private Data data;
 
 
     @Override
@@ -90,6 +92,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void iniData() {
+        data = new Data();
         Intent intent = getIntent();
         address = intent.getStringExtra("address");
 //        Log.d("SearchActivity", intent.getStringExtra("address"));
@@ -116,7 +119,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
         keywordsAdapter = new KeywordsAdapter(this);
         keywordsAdapter.setSearchListener(this);
-        getKeywords(keywords);
+        getKeywords(data.SEARCH_KEYWORDS);
         gridView.setAdapter(keywordsAdapter);
         adapter = new SearchAdapter(this);
         adapter.setSearchListener(this);
@@ -128,7 +131,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         foodView.addOnScrollListener(endLessOnScrollListener = new EndLessOnScrollListener(foodmanager) {
             @Override
             protected void onLoadMore(int curentPage) {
-                getGsonRequest("http://food.boohee.com/fb/v1/search?page=" + page + "&order_asc=desc&q=" + toUtf8(url));
+                getGsonRequest(data.SEARCH_PAGE + page + data.SEARCH_Q + toUtf8(url));
                 page++;
             }
         });
@@ -185,7 +188,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             foodMoreAdapter = new FoodMoreAdapter(this);
             foodMoreAdapter.setSearchListenner(this);
             foodMoreAdapter.setAddress(address);
-            getGsonRequest("http://food.boohee.com/fb/v1/search?page=1&order_asc=desc&q=" + toUtf8(url));
+            getGsonRequest(data.SEARCH_PAGE+1+data.SEARCH_Q + toUtf8(url));
             foodView.setLayoutManager(foodmanager);
             foodView.setAdapter(foodMoreAdapter);
             option.setVisibility(View.GONE);
@@ -206,6 +209,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     public void removeAll() {
         arrayList.clear();
         history.setVisibility(View.GONE);
+        dbTool.deleteAllHistory();
     }
 
     public void clearAll() {

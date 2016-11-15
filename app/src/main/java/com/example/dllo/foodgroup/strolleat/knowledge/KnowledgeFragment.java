@@ -13,6 +13,7 @@ import com.example.dllo.foodgroup.Bean.KnowledgeItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseFragment;
 import com.example.dllo.foodgroup.main.StrolleatWebActivity;
+import com.example.dllo.foodgroup.tools.Data;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
@@ -28,17 +29,19 @@ public class KnowledgeFragment extends BaseFragment implements WebCollectListene
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
-    private String url = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=3&per=10";
+//    private String url = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=3&per=10";
     private KnowledgeAdapter adapter;
     private ArrayList<KnowledgeItemBean> arraylist;
     private int page = 2;
+    private Data data;
 
     @Override
     protected void initData() {
+        data = new Data();
         arraylist = new ArrayList<>();
         adapter = new KnowledgeAdapter(getContext());
         adapter.setWebCollectListener(this);
-        getGsonRequest(url);
+        getGsonRequest(data.KNOWLEDGE_HEAD+1+data.KNOWLEDGE_END);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
@@ -46,7 +49,7 @@ public class KnowledgeFragment extends BaseFragment implements WebCollectListene
             @Override
             public void onRefresh() {
                 arraylist.clear();
-                getGsonRequest(url);
+                getGsonRequest(data.KNOWLEDGE_HEAD+1+data.KNOWLEDGE_END);
                 adapter.notifyDataSetChanged();
                 refreshLayout.setRefreshing(false);
             }
@@ -54,7 +57,7 @@ public class KnowledgeFragment extends BaseFragment implements WebCollectListene
         recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
             @Override
             protected void onLoadMore(int curentPage) {
-                getGsonRequest("http://food.boohee.com/fb/v1/feeds/category_feed?page="+page+"&category=3&per=10");
+                getGsonRequest(data.KNOWLEDGE_HEAD+page+data.KNOWLEDGE_END);
                 page++;
             }
         });

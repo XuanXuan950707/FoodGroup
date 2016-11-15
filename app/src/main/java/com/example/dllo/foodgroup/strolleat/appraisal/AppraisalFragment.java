@@ -13,6 +13,7 @@ import com.example.dllo.foodgroup.Bean.AppraisalItemBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseFragment;
 import com.example.dllo.foodgroup.main.StrolleatWebActivity;
+import com.example.dllo.foodgroup.tools.Data;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
@@ -30,16 +31,18 @@ public class AppraisalFragment extends BaseFragment implements WebCollectListene
     private SwipeRefreshLayout refreshLayout;
     private AppraisalAdapter adapter;
     private ArrayList<AppraisalItemBean> arrayList;
-    private String url = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=2&per=10";
+//    private String url = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=2&per=10";
     private LinearLayoutManager manager;
     private int page = 2;
+    private Data data;
 
     @Override
     protected void initData() {
+        data = new Data();
         arrayList = new ArrayList<>();
         adapter = new AppraisalAdapter(getContext());
         adapter.setWebCollectListener(this);
-        getGsonRequest(url);
+        getGsonRequest(data.APPRAISAL_HEAD+1+data.APPRAISAL_END);
         rv.setAdapter(adapter);
         manager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(manager);
@@ -57,7 +60,7 @@ public class AppraisalFragment extends BaseFragment implements WebCollectListene
                         }
                     }
                 }).start();
-                getGsonRequest("http://food.boohee.com/fb/v1/feeds/category_feed?page="+page+"&category=2&per=10");
+                getGsonRequest(data.APPRAISAL_HEAD+page+data.APPRAISAL_END);
                 page++;
 //                refreshLayout.setRefreshing(false);
             }
@@ -66,7 +69,7 @@ public class AppraisalFragment extends BaseFragment implements WebCollectListene
             @Override
             public void onRefresh() {
                 arrayList.clear();
-                getGsonRequest(url);
+                getGsonRequest(data.APPRAISAL_HEAD+1+data.APPRAISAL_END);
                 refreshLayout.setRefreshing(false);
             }
         });

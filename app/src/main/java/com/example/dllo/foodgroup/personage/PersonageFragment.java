@@ -43,7 +43,7 @@ public class PersonageFragment extends BaseFragment implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.personage_login:
-                Intent intent1 = new Intent(getContext(), PersonageMessageActivity.class);
+                Intent intent1 = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent1);
                 break;
         }

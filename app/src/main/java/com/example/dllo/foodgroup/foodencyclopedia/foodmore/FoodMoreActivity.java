@@ -23,6 +23,7 @@ import com.example.dllo.foodgroup.Bean.TestBean;
 import com.example.dllo.foodgroup.Bean.TypeBean;
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseActivity;
+import com.example.dllo.foodgroup.tools.Data;
 import com.example.dllo.foodgroup.tools.EndLessOnScrollListener;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
@@ -59,6 +60,7 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
     private LinearLayout down;
     private LinearLayout up;
     private String sort = "0";
+    private Data data;
 
     @Override
     protected int getLayout() {
@@ -79,20 +81,23 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void iniData() {
+        data = new Data();
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         String title = intent.getStringExtra("title");
         kind = intent.getStringExtra("kind");
-        if (!kind.equals("group")){
-            poptext.setVisibility(View.GONE);
+        poptext.setVisibility(View.GONE);
+        if (kind.equals("group")){
+            poptext.setVisibility(View.VISIBLE);
+            getPopShowItem();
         }
         Log.d("FoodMoreActivity", kind);
 //        popArrayList = getPopShowItem();
         getTypePopShowItem();
-        getPopShowItem();
         arrayList = new ArrayList<>();
         adapter = new FoodMoreAdapter(this);
-        getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=1&page=1&order_asc="+sort);
+        getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_ORDERBY+1+data.FOODMORE_PAGE+1+data.FOODMORE_ORDERASC+sort);
+        Log.d("FoodMoreActivity", data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_ORDERBY + 1 + data.FOODMORE_PAGE + 1 + data.FOODMORE_ORDERASC + sort);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
@@ -101,11 +106,12 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
             @Override
             protected void onLoadMore(int curentPage) {
                 if (subValue) {
-                    getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=" + order + "&page=" + page + "&order_asc="+sort);
+                    getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_ORDERBY + order + data.FOODMORE_PAGE + page + data.FOODMORE_ORDERASC+sort);
                     page++;
                 }
                 else if (subValue == false){
-                    getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=" + subValuepage + "&order_asc="+sort);getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=" + subValuepage + "&order_asc="+sort);
+                    getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_SUBVALUE + localFoodId + ")"+ data.FOODMORE_ORDERBY + order + data.FOODMORE_PAGE + subValuepage + data.FOODMORE_ORDERASC+sort);
+//                    getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=" + subValuepage + "&order_asc="+sort);
                     subValuepage++;
                 }
             }
@@ -152,9 +158,9 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         arrayList.clear();
         endLessOnScrollListener.resetPreviousTotal();
         if (subValue) {
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=" + order + "&page=1&order_asc="+sort);
+            getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_ORDERBY + order + data.FOODMORE_ORDERASC+sort);
         }else if (subValue == false){
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=1&order_asc="+sort);
+            getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_SUBVALUE + localFoodId + ")"+ data.FOODMORE_ORDERBY + order + data.FOODMORE_PAGE + 1 + data.FOODMORE_ORDERASC+sort);
         }
     }
 
@@ -165,9 +171,9 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         arrayList.clear();
         endLessOnScrollListener.resetPreviousTotal();
         if (subValue) {
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=" + order + "&page=1&order_asc="+sort);
+            getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_ORDERBY + order + data.FOODMORE_ORDERASC+sort);
         }else if (subValue == false){
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=1&order_asc="+sort);
+            getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_SUBVALUE + localFoodId + ")"+ data.FOODMORE_ORDERBY + order + data.FOODMORE_PAGE + 1 + data.FOODMORE_ORDERASC+sort);
         }
     }
 
@@ -216,11 +222,11 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
     }
 
     protected void getTypePopShowItem() {
-        String url = "http://food.boohee.com/fb/v1/foods/sort_types";
+//        String url = "http://food.boohee.com/fb/v1/foods/sort_types";
         popShowItemBeen = new ArrayList<>();
         GsonRequest<TypeBean> gsonRequest =
                 new GsonRequest<TypeBean>(TypeBean.class,
-                        url, new Response.Listener<TypeBean>() {
+                        data.FOODMORE_SORTTYPE, new Response.Listener<TypeBean>() {
                     @Override
                     public void onResponse(TypeBean response) {
                         for (int i = 0; i < response.getTypes().size(); i++) {
@@ -304,9 +310,9 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         Log.d("order", order);
         arrayList.clear();
         if (subValue) {
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=" + order + "&page=1&order_asc=0");
+            getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_ORDERBY + order +data.FOODMORE_PAGE+1+data.FOODMORE_ORDERASC+0);
         }else if (subValue == false){
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + localFoodId + ")"+ "&order_by=" + order + "&page=1&order_asc=0");
+            getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_SUBVALUE + localFoodId + ")"+ data.FOODMORE_ORDERBY + order + data.FOODMORE_PAGE+1+data.FOODMORE_ORDERASC+0);
         }
         endLessOnScrollListener.resetPreviousTotal();
         type.setText(popShowItemBeen.get(Integer.parseInt(order)-2).getName());
@@ -323,11 +329,11 @@ public class FoodMoreActivity extends BaseActivity implements View.OnClickListen
         if (foodId != id) {
             localFoodId = foodId;
             subValue = false;
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "(&sub_value=" + foodId + ")" + "&order_by=" + order + "&page=1&order_asc="+sort);
+            getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_SUBVALUE + foodId + ")" + data.FOODMORE_ORDERBY + order +data.FOODMORE_PAGE+1+data.FOODMORE_ORDERASC +sort);
         }else if (foodId == id){
 
             subValue = true;
-            getGsonRequest("http://food.boohee.com/fb/v1/foods?kind=" + kind + "&value=" + id + "&order_by=1&page=1&order_asc="+sort);
+            getGsonRequest(data.FOODMORE_KIND + kind + data.FOODMORE_VALUE + id + data.FOODMORE_ORDERBY+1+data.FOODMORE_PAGE+1+data.FOODMORE_ORDERASC+sort);
         }
         endLessOnScrollListener.resetPreviousTotal();
         poptext.setText(value);

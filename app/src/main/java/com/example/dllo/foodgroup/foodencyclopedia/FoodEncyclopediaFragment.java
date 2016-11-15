@@ -14,12 +14,14 @@ import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.foodencyclopedia.compare.CompareActivity;
 import com.example.dllo.foodgroup.foodencyclopedia.foodmore.FoodMoreActivity;
 import com.example.dllo.foodgroup.foodencyclopedia.search.SearchActivity;
+import com.example.dllo.foodgroup.tools.Data;
 import com.example.dllo.foodgroup.tools.GsonRequest;
 import com.example.dllo.foodgroup.Bean.TestBean;
 import com.example.dllo.foodgroup.tools.KindAndGroupListnener;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 import com.example.dllo.foodgroup.base.BaseFragment;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +31,7 @@ public class FoodEncyclopediaFragment extends BaseFragment implements KindAndGro
 
     private ListView lv;
     private LinearLayout headViewLayout;
-    private String url = "http://food.boohee.com/fb/v1/categories/list";
+//    private String url = "http://food.boohee.com/fb/v1/categories/list";
     private GridView classGridView;
     private ArrayList<GridBean> classList;
     private GridViewAdapter classAdapter;
@@ -41,12 +43,14 @@ public class FoodEncyclopediaFragment extends BaseFragment implements KindAndGro
     private GridViewAdapter restaurantAdapter;
     private LinearLayout search;
     private LinearLayout comparebtn;
+    private Data data;
     //    private Button searchButton;
 //    private ImageButton searchImageButton;
 
     @Override
     protected void initData() {
 
+        data = new Data();
         brandList = new ArrayList<>();
         classList = new ArrayList<>();
         restaurantList = new ArrayList<>();
@@ -59,7 +63,7 @@ public class FoodEncyclopediaFragment extends BaseFragment implements KindAndGro
 
         GsonRequest<TestBean> gsonRequest =
                 new GsonRequest<TestBean>(TestBean.class,
-                        url, new Response.Listener<TestBean>() {
+                       data.ENCYCLOPEDIA_CATEGORIES , new Response.Listener<TestBean>() {
                     @Override
                     public void onResponse(TestBean response) {
 

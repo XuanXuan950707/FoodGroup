@@ -39,8 +39,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 onBackPressed();
                 break;
             case R.id.login_qq:
-
+                loginqq();
                 break;
         }
+    }
+
+    private void loginqq() {
+
     }
 }
