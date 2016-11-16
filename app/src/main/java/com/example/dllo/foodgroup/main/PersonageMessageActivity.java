@@ -1,5 +1,6 @@
 package com.example.dllo.foodgroup.main;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.dllo.foodgroup.R;
 import com.example.dllo.foodgroup.base.BaseActivity;
+import com.example.dllo.foodgroup.tools.VolleySingleton;
 import com.example.dllo.foodgroup.tools.WheelView;
 
 import java.util.Arrays;
@@ -48,6 +50,8 @@ public class PersonageMessageActivity extends BaseActivity implements View.OnCli
     private String leftweight = "";
     private String rightweight = "";
     private ImageView back;
+    private ImageView icon;
+    private TextView name;
 
     @Override
     protected int getLayout() {
@@ -56,6 +60,8 @@ public class PersonageMessageActivity extends BaseActivity implements View.OnCli
 
     @Override
     protected void initView() {
+        icon = bindView(R.id.personagemessage_icon);
+        name = bindView(R.id.personagemessage_name);
         setSex = bindView(R.id.personagemessage_sex);
         setAge = bindView(R.id.personagemessage_age);
         setHeight = bindView(R.id.personagemessage_height);
@@ -70,6 +76,7 @@ public class PersonageMessageActivity extends BaseActivity implements View.OnCli
 
     @Override
     protected void iniData() {
+        Intent intent = getIntent();
         for (int i = 0; i < AGE_PLANETS.length; i++) {
             AGE_PLANETS[i] = i+"";
         }
@@ -86,6 +93,8 @@ public class PersonageMessageActivity extends BaseActivity implements View.OnCli
         agePop();
         heightPop();
         weightPop();
+        name.setText(intent.getStringExtra("name"));
+        VolleySingleton.getInstance().getImage(intent.getStringExtra("icon"), icon);
     }
 
     @Override

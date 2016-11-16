@@ -32,14 +32,6 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
     //是否上拉数据
     private boolean loading = true;
 
-//    public EndLessOnScrollListener(LinearLayoutManager linearLayoutManager) {
-//        this.linearLayoutManager = linearLayoutManager;
-//    }
-
-//    public EndLessOnScrollListener(StaggeredGridLayoutManager staggeredGridLayoutManager) {
-//        this.staggeredGridLayoutManager = staggeredGridLayoutManager;
-//    }
-
     private void getNumbers() {
         totallItemCount = layoutManager.getItemCount();
         if (layoutManager instanceof LinearLayoutManager) {
@@ -68,10 +60,6 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
 
             }
         }
-//        Log.d("EndLessOnScrollListener", "loading:" + loading);
-//        Log.d("EndLessOnScrollListener", "totallItemCount:" + totallItemCount);
-//        Log.d("EndLessOnScrollListener", "visibleItemCount:" + visibleItemCount);
-//        Log.d("EndLessOnScrollListener", "firstVisibleItem:" + firstVisibleItem);
         if (!loading && totallItemCount - visibleItemCount <= firstVisibleItem) {
             curentPage++;
             onLoadMore(curentPage);
@@ -81,5 +69,9 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
 
     }
 
+    /**
+     * 提供一个抽闲方法，在Activity中监听到这个EndLessOnScrollListener
+     * 并且实现这个方法
+     * */
     protected abstract void onLoadMore(int curentPage);
 }

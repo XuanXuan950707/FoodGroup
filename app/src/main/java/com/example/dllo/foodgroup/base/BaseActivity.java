@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import cn.bmob.v3.Bmob;
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * Created by dllo on 16/10/21.

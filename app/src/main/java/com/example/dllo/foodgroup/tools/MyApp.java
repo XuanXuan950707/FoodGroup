@@ -3,6 +3,8 @@ package com.example.dllo.foodgroup.tools;
 import android.app.Application;
 import android.content.Context;
 
+import cn.sharesdk.framework.ShareSDK;
+
 /**
  * Created by dllo on 16/10/24.
  *
@@ -15,6 +17,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         sContext = this;
+        ShareSDK.initSDK(this,"19182555737d6");
     }
     public static Context getsContext(){
         return sContext;

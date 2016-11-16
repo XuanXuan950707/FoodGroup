@@ -27,6 +27,7 @@
             android:padding="10dp"
             android:layout_alignParentRight="true"
             android:src="@mipmap/ic_my_setting"
+            android:id="@+id/personage_setting"
             />
         <com.example.dllo.foodgroup.tools.CirclemageView
             android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             app:isCircle="true"
+            android:id="@+id/personage_icon"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -48,6 +50,30 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
             android:id="@+id/personage_login"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wo"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:id="@+id/personage_username"
+            android:visibility="gone"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            android:textColor="#FFFFFF"
+            android:text="修改个人信息"
+            android:textSize="25dp"
+            android:padding="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/personage_setting_message"
+            android:visibility="gone"
             />
     </RelativeLayout>
     <LinearLayout
