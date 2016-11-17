@@ -1,6 +1,10 @@
 package com.example.dllo.foodgroup.personage;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +17,8 @@ import com.example.dllo.foodgroup.base.BaseFragment;
 import com.example.dllo.foodgroup.main.LoginActivity;
 import com.example.dllo.foodgroup.main.PersonageMessageActivity;
 import com.example.dllo.foodgroup.tools.CirclemageView;
+import com.example.dllo.foodgroup.tools.CirleDrawable;
+import com.example.dllo.foodgroup.tools.ImageThread;
 import com.example.dllo.foodgroup.tools.VolleySingleton;
 
 import cn.sharesdk.framework.Platform;
@@ -32,10 +38,15 @@ public class PersonageFragment extends BaseFragment implements View.OnClickListe
     private TextView settingMeaasge;
     private ImageView setting;
     private TextView username;
-    private CirclemageView usericon;
+    private ImageView usericon;
 
     @Override
     protected void initData() {
+        username.setText("");
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.ic_analyse_default);
+        CirleDrawable cirleDrawable
+                = new CirleDrawable(bitmap);
+        usericon.setImageDrawable(cirleDrawable);
         Platform qq = ShareSDK.getPlatform(QQ.NAME);
         try {
 
@@ -48,11 +59,12 @@ public class PersonageFragment extends BaseFragment implements View.OnClickListe
                 settingMeaasge.setVisibility(View.VISIBLE);
                 username.setVisibility(View.VISIBLE);
                 username.setText(name);
-                VolleySingleton.getInstance().getImage(icon, usericon);
+                VolleySingleton.getInstance().getCircleImg(icon, usericon);
             }
         } catch (NullPointerException e) {
 
         }
+
     }
 
     @Override
@@ -83,8 +95,15 @@ public class PersonageFragment extends BaseFragment implements View.OnClickListe
                 startActivityForResult(intent1,1);
                 break;
             case R.id.personage_setting:
+                String loginI;
                 Intent intent2 = new Intent(getContext(),SettingActivity.class);
-                startActivity(intent2);
+                if (username.getText().equals("")){
+                     loginI = ""+1;
+                }else{
+                    loginI = ""+0;
+                }
+                intent2.putExtra("login",loginI);
+                startActivityForResult(intent2,1);
                 break;
             case R.id.personage_setting_message:
                 Intent intent3 = new Intent(getContext(),PersonageMessageActivity.class);
@@ -103,11 +122,15 @@ public class PersonageFragment extends BaseFragment implements View.OnClickListe
             settingMeaasge.setVisibility(View.GONE);
             username.setVisibility(View.GONE);
             username.setText("");
-            usericon.setImageResource(R.mipmap.ic_analyse_default);
+//            usericon.setImageResource(R.mipmap.ic_analyse_default);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.ic_analyse_default);
+            CirleDrawable cirleDrawable
+                    = new CirleDrawable(bitmap);
+            usericon.setImageDrawable(cirleDrawable);
             return;
         }
         Log.d("MyFragment", "resultCode:" + resultCode);
-        if (requestCode == 1 && LoginActivity.RESULT == resultCode && data == null) {
+        if (requestCode == 1 && LoginActivity.RESULT == resultCode && data != null) {
             name = data.getStringExtra("name");
             Log.d("MyFragment123", name);
             icon = data.getStringExtra("icon");
@@ -116,7 +139,7 @@ public class PersonageFragment extends BaseFragment implements View.OnClickListe
             settingMeaasge.setVisibility(View.VISIBLE);
             username.setVisibility(View.VISIBLE);
             username.setText(name);
-            VolleySingleton.getInstance().getImage(icon, usericon);
+            VolleySingleton.getInstance().getCircleImg(icon,usericon);
 
         }
 

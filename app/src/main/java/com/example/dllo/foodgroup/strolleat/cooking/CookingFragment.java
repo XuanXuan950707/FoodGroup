@@ -35,6 +35,7 @@ public class CookingFragment extends BaseFragment implements WebCollectListener{
 
     private int page = 2;
     private Data data;
+    private  EndLessOnScrollListener endLessOnScrollListener;
 
     @Override
     protected void initData() {
@@ -53,9 +54,10 @@ public class CookingFragment extends BaseFragment implements WebCollectListener{
                 getGsonRequest(data.COOKING_HEAD+1+data.COOKING_END);
                 adapter.notifyDataSetChanged();
                 refreshLayout.setRefreshing(false);
+                endLessOnScrollListener.resetPreviousTotal();
             }
         });
-        recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
+        recyclerView.addOnScrollListener(endLessOnScrollListener = new EndLessOnScrollListener(manager) {
             @Override
             protected void onLoadMore(int curentPage) {
                 getGsonRequest

@@ -94,7 +94,7 @@ public class PersonageMessageActivity extends BaseActivity implements View.OnCli
         heightPop();
         weightPop();
         name.setText(intent.getStringExtra("name"));
-        VolleySingleton.getInstance().getImage(intent.getStringExtra("icon"), icon);
+        VolleySingleton.getInstance().getCircleImg(intent.getStringExtra("icon"), icon);
     }
 
     @Override

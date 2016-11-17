@@ -29,13 +29,12 @@
             android:src="@mipmap/ic_my_setting"
             android:id="@+id/personage_setting"
             />
-        <com.example.dllo.foodgroup.tools.CirclemageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_analyse_default"
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            app:isCircle="true"
+            android:src="@mipmap/ic_analyse_default"
             android:id="@+id/personage_icon"
             />
         <TextView

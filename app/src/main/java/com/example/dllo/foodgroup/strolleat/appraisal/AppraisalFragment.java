@@ -35,6 +35,7 @@ public class AppraisalFragment extends BaseFragment implements WebCollectListene
     private LinearLayoutManager manager;
     private int page = 2;
     private Data data;
+    private EndLessOnScrollListener endLessOnScrollListener;
 
     @Override
     protected void initData() {
@@ -46,7 +47,7 @@ public class AppraisalFragment extends BaseFragment implements WebCollectListene
         rv.setAdapter(adapter);
         manager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(manager);
-        rv.addOnScrollListener(new EndLessOnScrollListener(manager) {
+        rv.addOnScrollListener(endLessOnScrollListener = new EndLessOnScrollListener(manager) {
             @Override
             protected void onLoadMore(int curentPage) {
 //                refreshLayout.setRefreshing(true);
@@ -71,6 +72,7 @@ public class AppraisalFragment extends BaseFragment implements WebCollectListene
                 arrayList.clear();
                 getGsonRequest(data.APPRAISAL_HEAD+1+data.APPRAISAL_END);
                 refreshLayout.setRefreshing(false);
+                endLessOnScrollListener.resetPreviousTotal();
             }
         });
 

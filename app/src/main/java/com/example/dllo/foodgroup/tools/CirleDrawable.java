@@ -21,10 +21,10 @@ public class CirleDrawable extends Drawable{
         this.mBitmap = mBitmap;
         mPaint = new Paint();
         mPaint.setAntiAlias(true);// 抗锯齿
-        BitmapShader shader = new BitmapShader(mBitmap,
-                Shader.TileMode.CLAMP,
-                Shader.TileMode.CLAMP);
-        mPaint.setShader(shader); // 设置画笔的花纹
+        BitmapShader shader = new BitmapShader
+                (mBitmap,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        // 设置画笔的花纹
+        mPaint.setShader(shader);
         // 计算出半径
         r = Math.min(mBitmap.getHeight() / 2,mBitmap.getWidth() / 2);
     }

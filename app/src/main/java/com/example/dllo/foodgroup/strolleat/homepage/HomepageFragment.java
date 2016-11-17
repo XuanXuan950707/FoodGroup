@@ -33,6 +33,7 @@ public class HomepageFragment extends BaseFragment implements HomepageItemLisene
     private SwipeRefreshLayout refreshLayout;
     private int page = 2;
     private Data data;
+    private EndLessOnScrollListener endLessOnScrollListener;
 
     @Override
     protected void initData() {
@@ -49,6 +50,7 @@ public class HomepageFragment extends BaseFragment implements HomepageItemLisene
             @Override
             public void onRefresh() {
                 arrayList.clear();
+                endLessOnScrollListener.resetPreviousTotal();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -64,7 +66,7 @@ public class HomepageFragment extends BaseFragment implements HomepageItemLisene
                 refreshLayout.setRefreshing(false);
             }
         });
-        rc.addOnScrollListener(new EndLessOnScrollListener(manager) {
+        rc.addOnScrollListener(endLessOnScrollListener = new EndLessOnScrollListener(manager) {
             @Override
             protected void onLoadMore(int curentPage) {
                 getGsonRequest(data.HOMEPAGE_HEAD+page+data.HOMEPAGE_END);

@@ -34,6 +34,7 @@ public class KnowledgeFragment extends BaseFragment implements WebCollectListene
     private ArrayList<KnowledgeItemBean> arraylist;
     private int page = 2;
     private Data data;
+    private EndLessOnScrollListener endLessOnScrollListener;
 
     @Override
     protected void initData() {
@@ -52,13 +53,15 @@ public class KnowledgeFragment extends BaseFragment implements WebCollectListene
                 getGsonRequest(data.KNOWLEDGE_HEAD+1+data.KNOWLEDGE_END);
                 adapter.notifyDataSetChanged();
                 refreshLayout.setRefreshing(false);
+                endLessOnScrollListener.resetPreviousTotal();
             }
         });
-        recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
+        recyclerView.addOnScrollListener(endLessOnScrollListener = new EndLessOnScrollListener(manager) {
             @Override
             protected void onLoadMore(int curentPage) {
                 getGsonRequest(data.KNOWLEDGE_HEAD+page+data.KNOWLEDGE_END);
                 page++;
+
             }
         });
     }
